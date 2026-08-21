@@ -3,7 +3,7 @@
 > 武俠 게임 『활협전(活俠傳)』의 대화 화면을 모사해, 직접 쓴 대본을 게임처럼 재생할 수 있는
 > **팬메이드 2차 창작 도구**입니다. 설치 없이 브라우저에서 바로 동작합니다.
 
-**▶ 바로 써 보기:** `https://5thsun1-ux.github.io/Legend-of-Mortal/` (GitHub Pages 설정 후 접속)
+**▶ 바로 써 보기:** `https://5thsun1-ux.github.io/Legend-of-Mortal/` 
 
 ---
 
@@ -45,12 +45,6 @@
 - 도구로 제작한 결과물(시현 HTML)을 공개할 때는 원작사의 2차 창작 가이드라인을 따라 주시고,
   **개인적·비상업적 용도**로만 사용해 주세요.
 
-## GitHub Pages로 배포하는 법
-
-1. 이 저장소를 GitHub에 만듭니다(또는 이 파일들을 저장소 루트에 올립니다).
-2. 저장소 **Settings → Pages**로 이동합니다.
-3. **Source**를 `Deploy from a branch`로 두고, Branch는 `main` / 폴더는 `/(root)` 를 선택 후 저장합니다.
-4. 1~2분 뒤 `https://5thsun1-ux.github.io/Legend-of-Mortal/` 에서 바로 실행됩니다.
 
 ## 로컬에서 실행
 
