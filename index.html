@@ -328,7 +328,7 @@ input[type=checkbox]{accent-color:var(--accent);width:16px;height:16px;cursor:po
 .thumbNoBg{
   width:96px;height:64px;display:flex;align-items:center;justify-content:center;
   border:2px dashed #6f5a3c;border-radius:8px;background:#0c0a08;
-  font-family:var(--serif);font-size:24px;color:#8a7454;
+  font-family:var(--serif);font-size:14px;color:#8a7454;
 }
 .thumbNoImg{
   width:96px;height:84px;display:flex;align-items:center;justify-content:center;
@@ -345,6 +345,13 @@ input[type=checkbox]{accent-color:var(--accent);width:16px;height:16px;cursor:po
 }
 .xlsxReport b{color:var(--accent2)}
 .xlsxReport .warn{color:#e3a88e}
+.xlsxAssets{display:flex;flex-direction:column;gap:6px;margin-top:9px;padding-top:8px;border-top:1px dashed #5a4a36}
+.xlsxAsset{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:5px 7px;border-radius:7px;background:#201a13}
+.xlsxAsset b{min-width:70px;font-size:11.5px}
+.xlsxAsset .assetName{flex:1 1 150px;color:var(--text)}
+.xlsxAsset .uploadBtn{font-size:11.5px;padding:4px 9px}
+.xlsxAsset.done{opacity:.65}
+.xlsxAsset.done .uploadBtn{display:none}
 .pi-thumb.noImg{
   display:inline-flex;align-items:center;justify-content:center;
   width:44px;height:60px;background:#0c0a08;border-radius:6px;
@@ -682,14 +689,18 @@ header{position:relative}
         <div class="favRowInner" id="bgFavList"></div>
       </div>
       <div id="bgList" class="thumbrow"></div>
-      <label class="uploadBtn"><span data-i18n="p1u">배경 업로드 (여러 장 한번에 선택 가능)</span><input type="file" id="bgUpload" accept="image/*" multiple hidden></label>
+      <div class="row btns">
+        <label class="uploadBtn"><span data-i18n="p1u">배경 업로드 (여러 장 한번에 선택 가능)</span><input type="file" id="bgUpload" accept="image/*" multiple hidden></label>
+        <button id="clearBgBtn" data-i18n="clear_all">전체 삭제</button>
+      </div>
     </div>
 
     <div class="panel">
       <h2><span data-i18n="p2t">② 등장인물</span> <span class="h2note" data-i18n="p2n">— 최대 10명 배치 · 폴더 관리 · ★ 즐겨찾기 · 사진 클릭 시 표정 선택</span></h2>
       <div class="row btns">
         <label class="uploadBtn"><span data-i18n="p2f">📁 폴더째 추가 (폴더 이름 = 인물 이름)</span><input type="file" id="charFolderUpload" webkitdirectory directory multiple hidden></label>
-        <label class="uploadBtn"><span data-i18n="p2i">🖼 이미지 1장 추가</span><input type="file" id="charUpload" accept="image/*" hidden></label>
+        <label class="uploadBtn"><span data-i18n="p2i">이미지 1장 추가</span><input type="file" id="charUpload" accept="image/*" hidden></label>
+        <button id="clearCharBtn" data-i18n="clear_all">전체 삭제</button>
       </div>
       <p class="hint" data-i18n="p2hint">투명 PNG 권장 — 검정 배경 이미지는 자동으로 투명 처리됩니다. 폴더 하나에 표정/자세 이미지를 여러 장 넣어 두면 사람마다 골라 쓸 수 있습니다. (예: 욱죽/화남.png, 욱죽/미소.png)</p>
       <div class="favRow hidden" id="charFavRow">
@@ -704,7 +715,7 @@ header{position:relative}
       <h2><span data-i18n="p3t">③ 사건</span> <span class="h2note" data-i18n="p3n">— 책 이미지가 펼쳐지며 삽화가 출력됩니다 · 지정한 대사 구간(시작~끝)에 걸쳐 표시</span></h2>
       <div class="row evform">
         <input type="text" id="evTitle" maxlength="6" data-i18n-ph="ev_title_ph" placeholder="제목 (기본: 사건)">
-        <label class="uploadBtn small"><span data-i18n="ev_img">🖼 삽화 선택</span><input type="file" id="evImgUpload" accept="image/*" hidden></label>
+        <label class="uploadBtn small"><span data-i18n="ev_img">삽화 선택</span><input type="file" id="evImgUpload" accept="image/*" hidden></label>
         <span id="evImgName" class="hint" data-i18n="ev_none">삽화 없음 (필수)</span>
       </div>
       <div class="row evform">
@@ -712,6 +723,7 @@ header{position:relative}
         <span class="evTilde">~</span>
         <label class="evLabel"><span data-i18n="ev_to">끝 대사</span> <select id="evTo"></select></label>
         <button id="evAddBtn" class="primary" data-i18n="ev_add">사건 추가</button>
+        <button id="clearEventBtn" data-i18n="clear_all">전체 삭제</button>
       </div>
       <p class="hint" data-i18n="p3hint">구간은 공통루트 대사 번호로 지정합니다. 시작~끝 대사가 재생되는 동안 책이 펼쳐지고 왼쪽 페이지에 삽화, 오른쪽 페이지에 제목이 들어갑니다. 대사를 추가·삭제하면 번호가 밀릴 수 있으니 아래 목록에서 구간을 다시 맞춰 주세요. 삽화는 수묵 스타일 투명 PNG를 권장합니다.</p>
       <ul id="eventList"></ul>
@@ -730,7 +742,7 @@ header{position:relative}
           <button id="bulkAddBtn" class="primary" data-i18n="bulk_add">변환하여 추가</button>
           <button id="bulkReplaceBtn" data-i18n="bulk_replace">변환하여 교체</button>
           <button id="bulkSampleBtn" data-i18n="bulk_sample">예시 붙여넣기</button>
-          <label class="uploadBtn small"><span data-i18n="bulk_file">📄 파일 업로드 (txt·md·json)</span><input type="file" id="scriptFileUpload" accept=".txt,.md,.json,text/plain,text/markdown,application/json" hidden></label>
+          <label class="uploadBtn small"><span data-i18n="bulk_file">파일 업로드 (txt·md·json)</span><input type="file" id="scriptFileUpload" accept=".txt,.md,.json,text/plain,text/markdown,application/json" hidden></label>
         </div>
       </div>
       <div class="row btns">
@@ -740,14 +752,14 @@ header{position:relative}
         <label class="uploadBtn small"><span data-i18n="json_load">JSON 불러오기</span><input type="file" id="jsonUpload" accept=".json,application/json" hidden></label>
       </div>
       <div class="row btns xlsxRow">
-        <label class="uploadBtn small"><span data-i18n="xlsx_file">📊 규격 엑셀 불러오기</span><input type="file" id="xlsxUpload" accept=".xlsx,.xls,.xlsm,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" hidden></label>
+        <label class="uploadBtn small"><span data-i18n="xlsx_file">규격 엑셀 불러오기</span><input type="file" id="xlsxUpload" accept=".xlsx,.xls,.xlsm,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" hidden></label>
         <select id="xlsxMode" data-i18n-title="xlsx_mode_tip">
           <option value="append" data-i18n="xlsx_append">기존 대사 뒤에 추가</option>
           <option value="replace" data-i18n="xlsx_replace">기존 대사 교체</option>
         </select>
         <button id="xlsxTemplateBtn" data-i18n="xlsx_template">빈 엑셀 양식 저장</button>
       </div>
-      <p class="hint" data-i18n="xlsx_hint">엑셀의 place · character · face · script · effect 열을 공통루트 대사와 연출로 변환합니다. etc. 열과 머리말은 무시합니다. place/character/face는 업로드한 파일명과 연결되며, 아직 없는 항목은 사진 없는 임시 항목으로 등록됩니다.</p>
+      <p class="hint" data-i18n="xlsx_hint">엑셀 상단의 필요 배경 · 필요 캐릭터 · 필요 사건삽화와 place · character · face · script · effect 열을 읽습니다. 같은 이름의 등록 자산은 자동 연결하고, 없는 자산은 불러오기 결과에서 이미지를 선택할 수 있습니다. etc. 열은 무시합니다.</p>
       <div id="xlsxReport" class="xlsxReport hidden" aria-live="polite"></div>
       <div class="routetabsWrap">
         <span class="rtLabel" data-i18n="rt_label">루트</span>
@@ -771,7 +783,7 @@ header{position:relative}
       <hr class="sep">
       <div class="row evform">
         <span class="rtLabel" data-i18n="bgm_label">배경음</span>
-        <label class="uploadBtn small"><span data-i18n="bgm_add">🎵 음악 파일 추가</span><input type="file" id="bgmUpload" accept="audio/*" multiple hidden></label>
+        <label class="uploadBtn small"><span data-i18n="bgm_add">음악 파일 추가</span><input type="file" id="bgmUpload" accept="audio/*" multiple hidden></label>
         <button id="bgmStopBtn" data-i18n="bgm_stop">■ 정지</button>
         <label class="evLabel"><span data-i18n="bgm_vol">음량</span> <input type="range" id="bgmVol" min="0" max="100" step="1" value="80"></label>
       </div>
@@ -822,11 +834,11 @@ ko: {
   p2t: '② 등장인물',
   p2n: '— 최대 10명 배치 · 폴더 관리 · ★ 즐겨찾기 · 사진 클릭 시 표정 선택',
   p2f: '📁 폴더째 추가 (폴더 이름 = 인물 이름)',
-  p2i: '🖼 이미지 1장 추가',
+  p2i: '이미지 1장 추가',
   p2hint: '투명 PNG 권장 — 검정 배경 이미지는 자동으로 투명 처리됩니다. 폴더 하나에 표정/자세 이미지를 여러 장 넣어 두면 사람마다 골라 쓸 수 있습니다. (예: 욱죽/화남.png, 욱죽/미소.png)',
   p3t: '③ 사건',
   p3n: '— 책 이미지가 펼쳐지며 삽화가 출력됩니다 · 지정한 대사 구간(시작~끝)에 걸쳐 표시',
-  ev_title_ph: '제목 (기본: 사건)', ev_img: '🖼 삽화 선택', ev_none: '삽화 없음 (필수)',
+  ev_title_ph: '제목 (기본: 사건)', ev_img: '삽화 선택', ev_none: '삽화 없음 (필수)',
   ev_from: '시작 대사', ev_to: '끝 대사', ev_add: '사건 추가',
   p3hint: '구간은 공통루트 대사 번호로 지정합니다. 시작~끝 대사가 재생되는 동안 책이 펼쳐지고 왼쪽 페이지에 삽화, 오른쪽 페이지에 제목이 들어갑니다. 대사를 추가·삭제하면 번호가 밀릴 수 있으니 아래 목록에서 구간을 다시 맞춰 주세요. 삽화는 수묵 스타일 투명 PNG를 권장합니다.',
   p4t: '④ 대사 입력',
@@ -835,25 +847,25 @@ ko: {
   line_ph: '대사를 입력하세요. Ctrl+Enter로 바로 추가됩니다.',
   add: '추가',
   bulk_add: '변환하여 추가', bulk_replace: '변환하여 교체', bulk_sample: '예시 붙여넣기',
-  bulk_file: '📄 파일 업로드 (txt·md·json)',
-  xlsx_file: '📊 규격 엑셀 불러오기', xlsx_append: '기존 대사 뒤에 추가', xlsx_replace: '기존 대사 교체',
+  bulk_file: '파일 업로드 (txt·md·json)',
+  xlsx_file: '규격 엑셀 불러오기', xlsx_append: '기존 대사 뒤에 추가', xlsx_replace: '기존 대사 교체',
   xlsx_mode_tip: '엑셀 대사를 현재 내용 뒤에 추가할지, 기존 내용을 교체할지 선택', xlsx_template: '빈 엑셀 양식 저장',
-  xlsx_hint: '엑셀의 place · character · face · script · effect 열을 공통루트 대사와 연출로 변환합니다. etc. 열과 머리말은 무시합니다. place/character/face는 업로드한 파일명과 연결되며, 아직 없는 항목은 이미지 없는 임시 항목으로 등록됩니다.',
+  xlsx_hint: '엑셀 상단의 필요 배경 · 필요 캐릭터 · 필요 사건삽화와 place · character · face · script · effect 열을 읽습니다. 같은 이름의 등록 자산은 자동 연결하고, 없는 자산은 불러오기 결과에서 이미지를 선택할 수 있습니다. etc. 열은 무시합니다.',
   bulk_ph: '[이름] = 대사  또는  이름 : 대사 (꺾쇠 생략 가능) — 구분자(=, :) 앞의 이름을 화자로 인식합니다.\n\n· 이름이 나오는 줄마다 새 대사입니다. 빈 줄 없이 연속해서 붙여도 됩니다.\n· 대사 안의 줄바꿈은 실제 줄바꿈 또는 \\n(₩n) 문자를 모두 인식합니다.\n· [나레이션] = 화자 없는 지문. 구분자 없는 문단도 나레이션으로 처리됩니다.\n· 이름 뒤 (괄호)는 표정 이름으로 인식 — 인물의 이미지 파일명과 같으면 자동 지정.  예) [조활(당황1)] = …\n· 괄호 안이 한자뿐이면 이름의 한자 주석으로 보고 화자 이름에서 제외합니다.\n· [선택지] = 문구A | 문구B | 문구C → 분기 선택지. 옵션은 순서대로 루트1·루트2·루트3로 연결됩니다.\n· [루트1] / [루트2] / [루트3] 줄 이후의 대사는 해당 루트에, [공통루트] 줄 이후는 공통루트에 쌓입니다.\n· 목록에 없는 이름은 사진 없이 이름만으로 인물이 생성됩니다. (나중에 ② 등장인물에서 사진 추가 가능)',
   load_sample: '예시 대사 불러오기', clear_all: '전체 삭제', json_save: 'JSON 저장', json_load: 'JSON 불러오기',
   rt_label: '루트', add_choice: '⑂ 선택지 추가',
   p5t: '⑤ 재생',
   open_show: '오프닝 보기', play_start: '▶ 처음부터', prev: '◀ 이전', next: '다음 ▶', export: '시현 파일 저장 (HTML)',
   p5hint: '게임 화면을 클릭하거나 스페이스바 / Enter 로 다음 대사로 넘어갑니다. ◈ 회상 = 지금까지의 대화 전체 보기. 배경 전환이 지정된 대사부터는 배경이 자동으로 바뀝니다. 「시현 파일 저장」은 편집기 없이 시현 내용만 재생되는 단독 HTML을 남급니다.',
-  bgm_label: '배경음', bgm_add: '🎵 음악 파일 추가', bgm_stop: '■ 정지', bgm_vol: '음량',
+  bgm_label: '배경음', bgm_add: '음악 파일 추가', bgm_stop: '■ 정지', bgm_vol: '음량',
   bgm_hint: '재생 시작(오프닝 「시작하기」·「▶ 처음부터」) 시 ●로 선택한 곡이 반복 재생됩니다. 곡명을 눌러 선택, ▶ 버튼으로 미리듣기가 가능합니다. 선택한 곡은 「시현 파일 저장」에도 함께 들어갑니다.',
   modal_title: '이미지 선택', modal_add: '＋ 이미지 추가', modal_place: '＋ 이 이미지로 배치', modal_close: '닫기',
   narr: '나레이션', bulkOpt: '텍스트 입력 (지문 일괄 변환)',
   placedCountF: '배치된 인물: {0} / {1}',
   rCommon: '공통루트', r1: '루트1', r2: '루트2', r3: '루트3',
   rc_choice: '⑂ 선택지', choiceEmpty: '(문구를 입력하세요)', optPhF: '선택지 {0}',
-  ctlBg: '🏞 배경', noChange: '변경 없음', bgFromF: '이 대사부터 「{0}」',
-  ctlExpr: '😀 표정', noSet: '지정 안 함',
+  ctlBg: '배경', noChange: '변경 없음', bgFromF: '이 대사부터 「{0}」',
+  ctlExpr: '표정', noSet: '지정 안 함',
   ctlX: '좌우', ctlSize: '크기', ctlFlip: '좌우 반전', delBtn: '삭제', exprLbl: '표정',
   noLines: '(대사 없음)',
   tsScriptFirst: '대사를 먼저 입력하세요. (④ 대사 입력)',
@@ -896,11 +908,11 @@ ja: {
   p2t: '② 登場人物',
   p2n: '— 最大10人配置 · フォルダ管理 · ★お気に入り · 写真クリックで表情選択',
   p2f: '📁 フォルダごと追加（フォルダ名＝キャラ名）',
-  p2i: '🖼 画像を1枚追加',
+  p2i: '画像を1枚追加',
   p2hint: '透過PNG推奨 — 黒背景の画像は自動で透過処理されます。フォルダに表情・ポーズ画像を複数入れておくと、人物ごとに選んで使えます。（例：キャラ/怒り.png, キャラ/微笑.png）',
   p3t: '③ 事件',
   p3n: '— 本の画像が開き挿絵が表示されます · 指定したセリフ区間（開始〜終了）の間表示',
-  ev_title_ph: 'タイトル（初期値：事件）', ev_img: '🖼 挿絵を選択', ev_none: '挿絵なし（必須）',
+  ev_title_ph: 'タイトル（初期値：事件）', ev_img: '挿絵を選択', ev_none: '挿絵なし（必須）',
   ev_from: '開始セリフ', ev_to: '終了セリフ', ev_add: '事件を追加',
   p3hint: '区間は共通ルートのセリフ番号で指定します。開始〜終了セリフの再生中、本が開き左ページに挿絵、右ページにタイトルが入ります。セリフを増減すると番号がずれることがあるので、下の一覧で区間を調整してください。挿絵は水墨画風の透過PNG推奨。',
   p4t: '④ セリフ入力',
@@ -909,25 +921,25 @@ ja: {
   line_ph: 'セリフを入力してください。Ctrl+Enterで即追加されます。',
   add: '追加',
   bulk_add: '変換して追加', bulk_replace: '変換して置換', bulk_sample: '例文を貼る',
-  bulk_file: '📄 ファイルをアップロード（txt·md·json）',
-  xlsx_file: '📊 規格Excelを読み込む', xlsx_append: '既存のセリフに追加', xlsx_replace: '既存のセリフを置換',
+  bulk_file: 'ファイルをアップロード（txt·md·json）',
+  xlsx_file: '規格Excelを読み込む', xlsx_append: '既存のセリフに追加', xlsx_replace: '既存のセリフを置換',
   xlsx_mode_tip: 'Excelのセリフを追加するか、現在の内容と置き換えるかを選択', xlsx_template: '空のExcelひな形を保存',
-  xlsx_hint: 'Excel内の place・character・face・script・effect 列を共通ルートと演出へ変換します。etc. 列と見出し前の情報は無視します。未登録の背景・人物は画像なしの仮項目として追加されます。',
+  xlsx_hint: '上部の「必要背景・必要キャラクター・必要事件挿絵」と place・character・face・script・effect 列を読み取ります。同名の登録済み素材は自動接続し、足りない画像は読み込み結果から選択できます。etc. 列は無視します。',
   bulk_ph: '[名前] = セリフ  または  名前 : セリフ （括弧は省略可）— 区切り（=, :）の前の名前を話者として認識します。\n\n· 名前の出る行ごとに新しいセリフです。空行なしで連続して貼っても構いません。\n· セリフ内の改行は実際の改行・\\n（₩n）文字の両方を認識します。\n· [ナレーション] = 話者なしの地の文。区切りのない段落もナレーションになります。\n· 名前の後の（括弧）は表情名として認識 — 画像ファイル名と一致すれば自動指定。 例）[焦活(動揺1)] = …\n· 括弧の中が漢字だけの場合は名前の注記とみなし、話者名から外します。\n· [選択肢] = 文A | 文B | 文C → 分岐選択肢。順にルート1・ルート2・ルート3へ接続されます。\n· [ルート1] / [ルート2] / [ルート3] の行以降はそのルートに、[共通ルート] の行以降は共通ルートに積まれます。\n· 一覧にない名前は写真なしの名前だけの人物として生成されます。（後で②登場人物で写真追加可）',
   load_sample: '例文セリフを読み込む', clear_all: 'すべて削除', json_save: 'JSON保存', json_load: 'JSON読込',
   rt_label: 'ルート', add_choice: '⑂ 選択肢を追加',
   p5t: '⑤ 再生',
   open_show: 'オープニングを見る', play_start: '▶ 最初から', prev: '◀ 前へ', next: '次へ ▶', export: 'デモファイル保存 (HTML)',
   p5hint: 'ゲーム画面をクリック、またはスペース/Enterで次のセリフへ進みます。◈ 回想＝これまでのセリフ一覧。背景切替が指定されたセリフから背景が自動で変わります。「デモファイル保存」は編集機能なしで再生だけできる単体HTMLを保存します。',
-  bgm_label: '背景音', bgm_add: '🎵 音楽ファイルを追加', bgm_stop: '■ 停止', bgm_vol: '音量',
+  bgm_label: '背景音', bgm_add: '音楽ファイルを追加', bgm_stop: '■ 停止', bgm_vol: '音量',
   bgm_hint: '再生開始時（オープニング「はじめる」·「▶ 最初から」）に ●で選んだ曲がループ再生されます。曲名クリックで選択、▶で試聴できます。選んだ曲は「デモファイル保存」にも含まれます。',
   modal_title: '画像を選択', modal_add: '＋ 画像を追加', modal_place: '＋ この画像で配置', modal_close: '閉じる',
   narr: 'ナレーション', bulkOpt: 'テキスト入力（文章一括変換）',
   placedCountF: '配置済み人物： {0} / {1}',
   rCommon: '共通ルート', r1: 'ルート1', r2: 'ルート2', r3: 'ルート3',
   rc_choice: '⑂ 選択肢', choiceEmpty: '（文を入力してください）', optPhF: '選択肢 {0}',
-  ctlBg: '🏞 背景', noChange: '変更なし', bgFromF: 'このセリフから 「{0}」',
-  ctlExpr: '😀 表情', noSet: '指定なし',
+  ctlBg: '背景', noChange: '変更なし', bgFromF: 'このセリフから 「{0}」',
+  ctlExpr: '表情', noSet: '指定なし',
   ctlX: '左右', ctlSize: 'サイズ', ctlFlip: '左右反転', delBtn: '削除', exprLbl: '表情',
   noLines: '（セリフなし）',
   tsScriptFirst: '先にセリフを入力してください。（④ セリフ入力）',
@@ -970,11 +982,11 @@ tw: {
   p2t: '② 登場人物',
   p2n: '— 最多配置10人 · 資料夾管理 · ★ 最愛 · 點擊照片選擇表情',
   p2f: '📁 整個資料夾加入（資料夾名稱＝人物名稱）',
-  p2i: '🖼 加入 1 張圖片',
+  p2i: '加入 1 張圖片',
   p2hint: '建議使用透明 PNG — 黑色背景圖片會自動去背。資料夾內可放多張表情/姿勢圖供各人物選用。（例：角色/生氣.png、角色/微笑.png）',
   p3t: '③ 事件',
   p3n: '— 書本圖片展開並顯示插圖 · 於指定台詞區間（開始～結束）內顯示',
-  ev_title_ph: '標題（預設：事件）', ev_img: '🖼 選擇插圖', ev_none: '尚無插圖（必填）',
+  ev_title_ph: '標題（預設：事件）', ev_img: '選擇插圖', ev_none: '尚無插圖（必填）',
   ev_from: '開始台詞', ev_to: '結束台詞', ev_add: '新增事件',
   p3hint: '區間以共通路線台詞編號指定。播放開始～結束台詞期間，書本會展開，左頁為插圖、右頁為標題。增刪台詞會使編號位移，請於下方清單重新調整區間。插圖建議使用水墨風透明 PNG。',
   p4t: '④ 台詞輸入',
@@ -983,25 +995,25 @@ tw: {
   line_ph: '請輸入台詞。Ctrl+Enter 可直接新增。',
   add: '新增',
   bulk_add: '轉換後新增', bulk_replace: '轉換後取代', bulk_sample: '貼上範例',
-  bulk_file: '📄 上傳檔案（txt·md·json）',
-  xlsx_file: '📊 匯入規格 Excel', xlsx_append: '附加於現有台詞', xlsx_replace: '取代現有台詞',
+  bulk_file: '上傳檔案（txt·md·json）',
+  xlsx_file: '匯入規格 Excel', xlsx_append: '附加於現有台詞', xlsx_replace: '取代現有台詞',
   xlsx_mode_tip: '選擇將 Excel 台詞附加至目前內容，或取代目前內容', xlsx_template: '下載空白 Excel 範本',
-  xlsx_hint: '將 Excel 中的 place、character、face、script、effect 欄轉換為共通路線與演出。忽略 etc. 欄及標題列之前的資訊。未登錄的背景與人物會建立為無圖片的暫存項目。',
+  xlsx_hint: '讀取上方的「需要背景、需要角色、需要事件插圖」以及 place、character、face、script、effect 欄。同名的已登錄素材會自動連結，缺少的圖片可在匯入結果中選擇。忽略 etc. 欄。',
   bulk_ph: '[名字] = 台詞  或  名字 : 台詞 （括號可省略）— 以分隔符（=, :）前的名字為說話者。\n\n· 名字出現的每一行都是新台詞，無需空行可連續貼上。\n· 台詞內換行可接受實際換行或 \\n（₩n）字元。\n· [旁白] = 無說話者的敘述。無分隔符的段落也視為旁白。\n· 名字後（括號）視為表情名 — 與圖片檔名相符則自動指定。 例）[焦活(慌張1)] = …\n· 括號內僅有漢字時視為名字註記，自說話者名稱中排除。\n· [選項] = 文A | 文B | 文C → 分歧選項。依序連接至路線1·路線2·路線3。\n· [路線1] / [路線2] / [路線3] 之後的台詞歸入該路線，[共通路線] 之後歸入共通路線。\n· 清單外的名字會建立只有名字（無照片）的人物。（之後可於②登場人物補照片）',
   load_sample: '載入範例台詞', clear_all: '全部刪除', json_save: 'JSON 儲存', json_load: 'JSON 讀取',
   rt_label: '路線', add_choice: '⑂ 新增選項',
   p5t: '⑤ 播放',
   open_show: '觀看開場', play_start: '▶ 從頭開始', prev: '◀ 上一句', next: '下一句 ▶', export: '儲存展示檔案 (HTML)',
   p5hint: '點擊遊戲畫面或按空白鍵/Enter 前進台詞。◈ 回想＝檢視目前為止所有台詞。指定背景切換的台詞起背景自動更換。「儲存展示檔案」會輸出不含編輯器、僅供播放的獨立 HTML。',
-  bgm_label: '背景音', bgm_add: '🎵 新增音樂檔', bgm_stop: '■ 停止', bgm_vol: '音量',
+  bgm_label: '背景音', bgm_add: '新增音樂檔', bgm_stop: '■ 停止', bgm_vol: '音量',
   bgm_hint: '播放開始（開場「開始」·「▶ 從頭開始」）時，以 ● 選取的樂曲會循環播放。點曲名選取、▶ 試聽。選取的樂曲也會包含在「儲存展示檔案」中。',
   modal_title: '選擇圖片', modal_add: '＋ 新增圖片', modal_place: '＋ 以此圖片配置', modal_close: '關閉',
   narr: '旁白', bulkOpt: '文字輸入（整篇批次轉換）',
   placedCountF: '已配置人物： {0} / {1}',
   rCommon: '共通路線', r1: '路線1', r2: '路線2', r3: '路線3',
   rc_choice: '⑂ 選項', choiceEmpty: '（請輸入文字）', optPhF: '選項 {0}',
-  ctlBg: '🏞 背景', noChange: '不變更', bgFromF: '自此台詞起 「{0}」',
-  ctlExpr: '😀 表情', noSet: '不指定',
+  ctlBg: '背景', noChange: '不變更', bgFromF: '自此台詞起 「{0}」',
+  ctlExpr: '表情', noSet: '不指定',
   ctlX: '左右', ctlSize: '大小', ctlFlip: '左右翻轉', delBtn: '刪除', exprLbl: '表情',
   noLines: '（無台詞）',
   tsScriptFirst: '請先輸入台詞。（④ 台詞輸入）',
@@ -1044,11 +1056,11 @@ cn: {
   p2t: '② 登场人物',
   p2n: '— 最多配置10人 · 文件夹管理 · ★ 收藏 · 点击照片选择表情',
   p2f: '📁 整个文件夹加入（文件夹名称＝人物名称）',
-  p2i: '🖼 加入 1 张图片',
+  p2i: '加入 1 张图片',
   p2hint: '建议使用透明 PNG — 黑色背景图片会自动抠图。文件夹内可放多张表情/姿势图供各人物选用。（例：角色/生气.png、角色/微笑.png）',
   p3t: '③ 事件',
   p3n: '— 书本图片展开并显示插图 · 在指定台词区间（开始～结束）内显示',
-  ev_title_ph: '标题（默认：事件）', ev_img: '🖼 选择插图', ev_none: '暂无插图（必填）',
+  ev_title_ph: '标题（默认：事件）', ev_img: '选择插图', ev_none: '暂无插图（必填）',
   ev_from: '开始台词', ev_to: '结束台词', ev_add: '新增事件',
   p3hint: '区间以共通路线台词编号指定。播放开始～结束台词期间，书本会展开，左页为插图、右页为标题。增删台词会使编号移位，请在下方列表重新调整区间。插图建议使用水墨风透明 PNG。',
   p4t: '④ 台词输入',
@@ -1057,25 +1069,25 @@ cn: {
   line_ph: '请输入台词。Ctrl+Enter 可直接新增。',
   add: '新增',
   bulk_add: '转换后新增', bulk_replace: '转换后替换', bulk_sample: '贴上范例',
-  bulk_file: '📄 上传文件（txt·md·json）',
-  xlsx_file: '📊 导入规范 Excel', xlsx_append: '追加到现有台词', xlsx_replace: '替换现有台词',
+  bulk_file: '上传文件（txt·md·json）',
+  xlsx_file: '导入规范 Excel', xlsx_append: '追加到现有台词', xlsx_replace: '替换现有台词',
   xlsx_mode_tip: '选择将 Excel 台词追加到当前内容，或替换当前内容', xlsx_template: '下载空白 Excel 模板',
-  xlsx_hint: '将 Excel 中的 place、character、face、script、effect 列转换为共通路线和演出。忽略 etc. 列及标题行之前的信息。未登记的背景和人物会建立为无图片的临时项目。',
+  xlsx_hint: '读取上方的“需要背景、需要角色、需要事件插图”以及 place、character、face、script、effect 列。同名的已登记素材会自动连接，缺少的图片可在导入结果中选择。忽略 etc. 列。',
   bulk_ph: '[名字] = 台词  或  名字 : 台词 （括号可省略）— 以分隔符（=, :）前的名字为说话者。\n\n· 名字出现的每一行都是新台词，无需空行可连续粘贴。\n· 台词内换行可接受实际换行或 \\n（₩n）字符。\n· [旁白] = 无说话者的叙述。无分隔符的段落也视为旁白。\n· 名字后（括号）视为表情名 — 与图片文件名相符则自动指定。 例）[焦活(慌张1)] = …\n· 括号内仅有汉字时视为名字注记，从说话者名中排除。\n· [选项] = 文A | 文B | 文C → 分歧选项。依序连接至路线1·路线2·路线3。\n· [路线1] / [路线2] / [路线3] 之后的台词归入该路线，[共通路线] 之后归入共通路线。\n· 列表外的名字会创建只有名字（无照片）的人物。（之后可于②登场人物补照片）',
   load_sample: '载入范例台词', clear_all: '全部删除', json_save: 'JSON 保存', json_load: 'JSON 读取',
   rt_label: '路线', add_choice: '⑂ 新增选项',
   p5t: '⑤ 播放',
   open_show: '观看开场', play_start: '▶ 从头开始', prev: '◀ 上一句', next: '下一句 ▶', export: '保存展示文件 (HTML)',
   p5hint: '点击游戏画面或按空格/Enter 前进台词。◈ 回想＝查看目前为止所有台词。指定背景切换的台词起背景自动更换。「保存展示文件」会输出不含编辑器、仅供播放的独立 HTML。',
-  bgm_label: '背景音', bgm_add: '🎵 添加音乐文件', bgm_stop: '■ 停止', bgm_vol: '音量',
+  bgm_label: '背景音', bgm_add: '添加音乐文件', bgm_stop: '■ 停止', bgm_vol: '音量',
   bgm_hint: '播放开始（开场「开始」·「▶ 从头开始」）时，以 ● 选择的乐曲会循环播放。点曲名选择、▶ 试听。选择的乐曲也会包含在「保存展示文件」中。',
   modal_title: '选择图片', modal_add: '＋ 新增图片', modal_place: '＋ 以此图片配置', modal_close: '关闭',
   narr: '旁白', bulkOpt: '文字输入（整篇批量转换）',
   placedCountF: '已配置人物： {0} / {1}',
   rCommon: '共通路线', r1: '路线1', r2: '路线2', r3: '路线3',
   rc_choice: '⑂ 选项', choiceEmpty: '（请输入文字）', optPhF: '选项 {0}',
-  ctlBg: '🏞 背景', noChange: '不变更', bgFromF: '自此台词起 「{0}」',
-  ctlExpr: '😀 表情', noSet: '不指定',
+  ctlBg: '背景', noChange: '不变更', bgFromF: '自此台词起 「{0}」',
+  ctlExpr: '表情', noSet: '不指定',
   ctlX: '左右', ctlSize: '大小', ctlFlip: '左右翻转', delBtn: '删除', exprLbl: '表情',
   noLines: '（无台词）',
   tsScriptFirst: '请先输入台词。（④ 台词输入）',
@@ -1118,11 +1130,11 @@ en: {
   p2t: '② Characters',
   p2n: '— up to 10 placed · folder-based · ★ favorites · click a photo to pick an expression',
   p2f: '📁 Add whole folder (folder name = character name)',
-  p2i: '🖼 Add 1 image',
+  p2i: 'Add 1 image',
   p2hint: 'Transparent PNG recommended — images with black backgrounds are keyed out automatically. Put several expression/pose images in one folder to choose per character. (e.g. name/angry.png, name/smile.png)',
   p3t: '③ Incidents',
   p3n: '— an open book appears with an illustration · shown across a chosen line range (from–to)',
-  ev_title_ph: 'Title (default: Incident)', ev_img: '🖼 Choose illustration', ev_none: 'No image (required)',
+  ev_title_ph: 'Title (default: Incident)', ev_img: 'Choose illustration', ev_none: 'No image (required)',
   ev_from: 'Start line', ev_to: 'End line', ev_add: 'Add incident',
   p3hint: 'The range is set by common-route line numbers. While lines from–to play, the book opens — illustration on the left page, title on the right. Adding or removing lines shifts the numbers, so readjust the range in the list below. A transparent ink-wash style PNG is recommended.',
   p4t: '④ Dialogue',
@@ -1131,25 +1143,25 @@ en: {
   line_ph: 'Enter a line. Ctrl+Enter adds it instantly.',
   add: 'Add',
   bulk_add: 'Convert & append', bulk_replace: 'Convert & replace', bulk_sample: 'Paste example',
-  bulk_file: '📄 Upload file (txt·md·json)',
-  xlsx_file: '📊 Import formatted Excel', xlsx_append: 'Append to existing lines', xlsx_replace: 'Replace existing lines',
+  bulk_file: 'Upload file (txt·md·json)',
+  xlsx_file: 'Import formatted Excel', xlsx_append: 'Append to existing lines', xlsx_replace: 'Replace existing lines',
   xlsx_mode_tip: 'Choose whether to append the Excel dialogue or replace the current script', xlsx_template: 'Save blank Excel template',
-  xlsx_hint: 'Converts the place, character, face, script, and effect columns into Common Route lines and staging. The etc. column and pre-header notes are ignored. Missing backgrounds and characters are added as image-less placeholders.',
+  xlsx_hint: 'Reads Required Backgrounds, Required Characters, and Required Event Art above the place, character, face, script, and effect columns. Registered assets with matching names connect automatically; missing images can be selected in the import result. The etc. column is ignored.',
   bulk_ph: '[Name] = line  or  Name : line (brackets optional) — the name before the separator (=, :) becomes the speaker.\n\n· Every line with a name starts a new line of dialogue. Pasting back-to-back without blank lines is fine.\n· Line breaks inside dialogue accept real newlines or the literal \\n (₩n).\n· [Narration] = speakerless narration. Paragraphs without a separator also become narration.\n· (Parentheses) after a name are read as an expression name — auto-assigned when it matches an image filename.  e.g. [Zhao Huo(startled1)] = …\n· Parentheses containing only Han characters count as name annotations and are dropped from the speaker name.\n· [Choice] = A | B | C → a branching choice. Options map to Route 1·2·3 in order.\n· Lines after [Route 1] / [Route 2] / [Route 3] go to that route; lines after [Common Route] go to the common route.\n· Names not in the list create name-only characters without photos. (Add photos later in ② Characters)',
   load_sample: 'Load example script', clear_all: 'Delete all', json_save: 'Save JSON', json_load: 'Load JSON',
   rt_label: 'Route', add_choice: '⑂ Add choice',
   p5t: '⑤ Playback',
   open_show: 'View opening', play_start: '▶ From start', prev: '◀ Prev', next: 'Next ▶', export: 'Export demo file (HTML)',
   p5hint: 'Click the game screen or press Space/Enter to advance. ◈ Recall = view all lines so far. The background auto-changes from any line that sets a new one. "Export demo file" saves a standalone HTML that only plays the show.',
-  bgm_label: 'BGM', bgm_add: '🎵 Add music files', bgm_stop: '■ Stop', bgm_vol: 'Volume',
+  bgm_label: 'BGM', bgm_add: 'Add music files', bgm_stop: '■ Stop', bgm_vol: 'Volume',
   bgm_hint: 'When playback starts (opening "Start" · "▶ From start"), the ●-selected track loops. Click a name to select it, ▶ to preview. The selected track is also embedded in the exported demo file.',
   modal_title: 'Choose image', modal_add: '＋ Add images', modal_place: '＋ Place with this image', modal_close: 'Close',
   narr: 'Narration', bulkOpt: 'Text input (bulk convert)',
   placedCountF: 'Characters placed: {0} / {1}',
   rCommon: 'Common Route', r1: 'Route 1', r2: 'Route 2', r3: 'Route 3',
   rc_choice: '⑂ Choice', choiceEmpty: '(enter the options)', optPhF: 'Option {0}',
-  ctlBg: '🏞 Background', noChange: 'No change', bgFromF: 'From this line: " {0} "',
-  ctlExpr: '😀 Expression', noSet: 'Not set',
+  ctlBg: 'Background', noChange: 'No change', bgFromF: 'From this line: " {0} "',
+  ctlExpr: 'Expression', noSet: 'Not set',
   ctlX: 'Position', ctlSize: 'Size', ctlFlip: 'Flip', delBtn: 'Delete', exprLbl: 'Expression',
   noLines: '(no lines)',
   tsScriptFirst: 'Enter some dialogue first. (④ Dialogue)',
@@ -1314,9 +1326,10 @@ const SAMPLE_TEXT_NARRATION = CLEAN_BUILD ? '' : `[나레이션] = 신도룡은 
 let uidSeq = 1;
 const uid = () => 'x' + (uidSeq++) + '_' + Date.now().toString(36);
 
-let LIB_BG = [];    // {id, name, src, builtin, fav} — src가 비어 있으면 엑셀에서 먼저 등록된 이미지 미연결 배경
-let LIB_CHAR = [];  // {id, name, builtin, fav, images:[{name, src}]}
-let LIB_BGM = [];   // {id, name, src} — 배경음 (업로드한 음악)
+let LIB_BG = [];         // {id, name, src, builtin, fav} — src가 비어 있으면 엑셀에서 먼저 등록된 이미지 미연결 배경
+let LIB_CHAR = [];       // {id, name, builtin, fav, images:[{name, src}]}
+let LIB_EVENT_ART = [];  // {id, name, src} — 엑셀 「필요 사건삽화」 자산
+let LIB_BGM = [];        // {id, name, src} — 배경음 (업로드한 음악)
 
 const state = {
   bgId: null,
@@ -1372,9 +1385,12 @@ const safeFileName = s => String(s).replace(/[\\/:*?"<>|]/g, '_').replace(/\s+/g
 /* 엑셀의 자산 식별자와 업로드 파일명을 느슨하게 연결하기 위한 비교 키 */
 const simpleNameKey = s => String(s == null ? '' : s).trim().toLocaleLowerCase();
 const bgNameKey = s => simpleNameKey(s).replace(/\.[^.]+$/, '').replace(/[\s_-]+/g, '');
+const charNameKey = s => simpleNameKey(s).replace(/\.[^.]+$/, '');
 const faceNameKey = s => simpleNameKey(s).replace(/\.[^.]+$/, '').replace(/\s+/g, '');
+const eventArtNameKey = s => simpleNameKey(s).replace(/\.[^.]+$/, '').replace(/[\s_-]+/g, '');
 const backgroundByName = name => LIB_BG.find(b => bgNameKey(b.name) === bgNameKey(name));
-const charLibByName = name => LIB_CHAR.find(c => simpleNameKey(c.name) === simpleNameKey(name));
+const charLibByName = name => LIB_CHAR.find(c => charNameKey(c.name) === charNameKey(name));
+const eventArtByName = name => LIB_EVENT_ART.find(a => eventArtNameKey(a.name) === eventArtNameKey(name));
 const imageIndexByName = (images, name) => images.findIndex(im => faceNameKey(im.name) === faceNameKey(name));
 
 const nameOf = cid => {
@@ -1439,7 +1455,8 @@ function serialize() {
       r2: state.routes.r2.map(l => serializeLine(l)),
       r3: state.routes.r3.map(l => serializeLine(l)),
     },
-    events: state.events.map(e => ({ id: e.id, title: e.title || '', src: e.src, from: e.from, to: e.to })),
+    events: state.events.map(e => ({ id: e.id, title: e.title || '', src: e.src, artName: e.artName || '', from: e.from, to: e.to })),
+    eventArts: LIB_EVENT_ART.map(a => ({ id: a.id, name: a.name, src: a.src || '' })),
     title: state.title || '',
     lang: LANG,
     bgm: LIB_BGM.map(b => ({ id: b.id, name: b.name, src: b.src })),
@@ -1554,12 +1571,15 @@ function deserializeV2(d) {
   });
   state.events = (Array.isArray(d.events) ? d.events : [])
     .filter(e => e && typeof e.src === 'string' && e.src)
-    .map(e => ({ id: e.id || uid(), title: String(e.title || ''), src: e.src, from: Math.max(0, +e.from || 0), to: Math.max(0, +e.to || 0) }));
+    .map(e => ({ id: e.id || uid(), title: String(e.title || ''), src: e.src, artName: String(e.artName || ''), from: Math.max(0, +e.from || 0), to: Math.max(0, +e.to || 0) }));
   state.events.forEach(e => {   // 대사 수에 맞춰 구간 보정
     if (!state.script.length) { e.from = e.to = 0; return; }
     e.from = Math.min(e.from, state.script.length - 1);
     e.to = Math.max(e.from, Math.min(e.to, state.script.length - 1));
   });
+  LIB_EVENT_ART = (Array.isArray(d.eventArts) ? d.eventArts : [])
+    .filter(a => a && a.name)
+    .map(a => ({ id: a.id || uid(), name: String(a.name), src: typeof a.src === 'string' ? a.src : '' }));
   state.title = typeof d.title === 'string' ? d.title : '';
   LIB_BGM = (Array.isArray(d.bgm) ? d.bgm : [])
     .filter(b => b && typeof b.src === 'string' && b.src)
@@ -1582,6 +1602,8 @@ function resetBranchPlayback() {
 function deserializeV1(d) {
   LIB_BG = BUILTIN_BG.map(b => ({ ...b }));
   LIB_CHAR = BUILTIN_CHAR.map(c => ({ ...c, images: c.images.slice() }));
+  LIB_EVENT_ART = [];
+  state.events = [];
   state.placed = [];
   (d.placed || []).forEach(p => {
     if (state.placed.length >= MAX_PLACED) return;
@@ -1686,6 +1708,7 @@ function defaultState() {
   state.title = '';
   state.bgmId = null;
   LIB_BGM = [];
+  LIB_EVENT_ART = [];
   state.events = [];
   if (state.script.length >= 2) {
     state.events.push({ id: uid(), title: '사건', src: SAMPLE_EVENT_IMG, from: 1, to: Math.min(4, state.script.length - 1) });
@@ -1734,7 +1757,7 @@ function renderBgLib() {
     const d = document.createElement('div');
     const hasImg = !!b.src;
     d.className = 'thumb' + (state.bgId === b.id ? ' sel' : '') + (b.fav ? ' star' : '');
-    d.innerHTML = `${hasImg ? `<img src="${b.src}" alt="">` : `<div class="thumbNoBg">🏞</div>`}<span class="t-name">${esc(b.name)}</span>${hasImg ? '' : '<span class="addTag">이미지 필요</span>'}`;
+    d.innerHTML = `${hasImg ? `<img src="${b.src}" alt="">` : `<div class="thumbNoBg">배경</div>`}<span class="t-name">${esc(b.name)}</span>${hasImg ? '' : '<span class="addTag">이미지 필요</span>'}`;
     d.title = hasImg ? '클릭: 이 배경으로 변경' : '엑셀에서 등록된 배경입니다. 같은 이름의 배경 이미지를 업로드하면 자동 연결됩니다.';
     d.onclick = () => { state.bgId = b.id; appliedBgSrc = null; updateStage(); renderBgLib(); saveState(); };
     if (!b.builtin) d.appendChild(libControls(LIB_BG, i, renderBgLib, true, () => removeBg(b.id)));
@@ -1750,6 +1773,19 @@ function removeBg(id) {
   if (state.bgId === id) state.bgId = LIB_BG.length ? LIB_BG[0].id : null;
   appliedBgSrc = null;
   renderBgLib(); renderScriptList(); updateStage(); saveState();
+}
+function clearAllBackgrounds() {
+  if (!LIB_BG.length) return;
+  if (!confirm(`배경 ${LIB_BG.length}개를 모두 삭제할까요? 대사에 지정된 배경 전환도 함께 해제됩니다.`)) return;
+  LIB_BG = [];
+  state.bgId = null;
+  state.script.concat(state.routes.r1, state.routes.r2, state.routes.r3).forEach(l => { if (l && !l.type) l.bg = null; });
+  appliedBgSrc = null;
+  const img = $('bgImg');
+  if (img) { img.onload = null; img.removeAttribute('src'); }
+  $('stage').style.setProperty('--ar', '16/9');
+  renderBgLib(); renderScriptList(); updateStage(); saveState();
+  toast('배경을 모두 삭제했습니다.');
 }
 
 function renderCharLib() {
@@ -1784,6 +1820,30 @@ function removeChar(id) {
   if (!confirm('이 인물을 목록에서 삭제할까요?')) return;
   LIB_CHAR = LIB_CHAR.filter(c => c.id !== id);
   renderCharLib(); saveState();
+}
+function clearAllCharacters() {
+  if (!LIB_CHAR.length && !state.placed.length) return;
+  const spoken = state.script.concat(state.routes.r1, state.routes.r2, state.routes.r3)
+    .filter(l => l && !l.type && l.cid !== NARR).length;
+  const msg = `등장인물을 모두 삭제할까요?${spoken ? `\n등장인물의 대사 ${spoken}개도 함께 삭제됩니다.` : ''}`;
+  if (!confirm(msg)) return;
+
+  LIB_CHAR = [];
+  state.placed = [];
+  state.script = state.script.filter(l => l.type === 'choice' || l.cid === NARR);
+  ROUTE_KEYS.forEach(k => { state.routes[k] = state.routes[k].filter(l => l.cid === NARR); });
+  state.script.concat(state.routes.r1, state.routes.r2, state.routes.r3).forEach(l => { if (l && l.stage) delete l.stage; });
+  if (!state.script.length) state.events = [];
+  else state.events.forEach(e => {
+    e.from = Math.min(Math.max(0, e.from), state.script.length - 1);
+    e.to = Math.min(Math.max(e.from, e.to), state.script.length - 1);
+  });
+  state.idx = -1;
+  resetBranchPlayback(); closeChoiceUI(); hideDialog();
+  if (modalCharId) closeExprModal();
+  renderChars(); renderCharLib(); renderPlacedList(); renderSpeakerOptions(); renderScriptList(); renderEvents();
+  updateStage(); updateProgress(); saveState();
+  toast('등장인물을 모두 삭제했습니다.');
 }
 
 /* =====================================================================
@@ -2301,9 +2361,9 @@ function renderLineFx(l) {
     <button class="lineFxBtn${f.groupAnim==='wander'?' on':''}" data-fx="groupWander">전원 왕복</button>
     <button class="lineFxBtn${f.groupAnim==='meet'?' on':''}" data-fx="groupMeet">마주치기</button>
     <button class="lineFxBtn${f.groupAnim==='rush'?' on':''}" data-fx="groupRush">서로 돌진</button>
-    <button class="lineFxBtn${f.book?' on':''}" data-fx="book">📖 책 이미지</button><input type="file" class="fxBookFile" accept="image/*" hidden>
+    <button class="lineFxBtn${f.book?' on':''}" data-fx="book">책 이미지</button><input type="file" class="fxBookFile" accept="image/*" hidden>
     ${f.book ? `<span class="${f.book.src?'':'fxWarn'}">${f.book.src ? esc(f.book.name||'삽화 연결됨') : '삽화 필요'}</span><button class="stgClr fxBookClear" title="책 효과 삭제">✕</button>` : ''}
-    <button class="lineFxBtn${f.item?' on':''}" data-fx="item">🖼 아이템</button><input type="file" class="fxItemFile" accept="image/*" hidden>
+    <button class="lineFxBtn${f.item?' on':''}" data-fx="item">아이템</button><input type="file" class="fxItemFile" accept="image/*" hidden>
     ${f.item ? `<span class="${f.item.src?'':'fxWarn'}">${esc(f.item.name||'아이템')}${f.item.src?'':' 이미지 필요'}</span><button class="stgClr fxItemClear" title="아이템 효과 삭제">✕</button>` : ''}
     ${raw.map(x => `<span class="fxRaw" title="아직 자동 효과로 변환되지 않은 원문">${esc(x)}</span>`).join('')}
   </div>`;
@@ -2369,7 +2429,7 @@ function bindLineFx(li, l) {
     touch();
   });
   const bf = li.querySelector('.fxBookFile');
-  bf.onchange = () => { const f = bf.files && bf.files[0]; bf.value = ''; if (!f) { touch(); return; } readAsDataURL(f).then(src => { const x=lineFx(l); x.book={title:'사건',src,name:f.name}; touch(); }); };
+  bf.onchange = () => { const f = bf.files && bf.files[0]; bf.value = ''; if (!f) { touch(); return; } readAsDataURL(f).then(src => { const x=lineFx(l); const assetName=(x.book&&x.book.name)||f.name; x.book={title:'사건',src,name:assetName}; setEventArtSource(assetName,src); touch(); }); };
   const itf = li.querySelector('.fxItemFile');
   itf.onchange = () => { const f = itf.files && itf.files[0]; itf.value = ''; if (!f) { touch(); return; } readAsDataURL(f).then(src => { const x=lineFx(l); x.item={name:(x.item&&x.item.name)||f.name.replace(/\.[^.]+$/,''),src}; touch(); }); };
   const bc = li.querySelector('.fxBookClear'); if (bc) bc.onclick = () => { delete l.fx.book; touch(); };
@@ -2569,6 +2629,18 @@ function renderEvents() {
     };
     ul.appendChild(li);
   });
+}
+function clearAllEvents() {
+  if (!state.events.length && !evImgPending && !LIB_EVENT_ART.length) return;
+  if (!confirm(`사건 ${state.events.length}개와 등록된 사건삽화 ${LIB_EVENT_ART.length}개를 모두 삭제할까요?`)) return;
+  state.events = [];
+  LIB_EVENT_ART = [];
+  evImgPending = null;
+  $('evTitle').value = '';
+  $('evImgName').textContent = t('ev_none');
+  shownEventId = null;
+  renderEvents(); updateEventOverlay(); saveState();
+  toast('사건을 모두 삭제했습니다.');
 }
 
 function hideDialog() { $('dialogBox').classList.add('hidden'); $('dialogBox').classList.remove('narr'); }
@@ -2783,7 +2855,7 @@ function openRecall() {
   const pushLine = (l, seen) => {
     const d = document.createElement('div');
     d.className = 'rc-entry' + (seen ? '' : ' future');
-    const bgMark = l.bg ? ` <span class="bgMark">🏞 ${esc((bgById(l.bg) || {}).name || '')}</span>` : '';
+    const bgMark = l.bg ? ` <span class="bgMark">${esc((bgById(l.bg) || {}).name || '')}</span>` : '';
     d.innerHTML = `<div class="rc-name">${esc(nameOf(l.cid))}${bgMark}</div><div class="rc-text">${esc(l.text)}</div>`;
     list.appendChild(d);
   };
@@ -3116,6 +3188,38 @@ function findXlsxHeader(rows) {
   return null;
 }
 
+const XLSX_REQUIREMENT_LABELS = {
+  '필요배경': 'backgrounds', 'requiredbackgrounds': 'backgrounds',
+  '필요캐릭터': 'characters', '필요인물': 'characters', 'requiredcharacters': 'characters',
+  '필요사건삽화': 'eventArts', '필요삽화': 'eventArts', 'requiredeventart': 'eventArts',
+};
+function splitXlsxAssetNames(values) {
+  const out = [];
+  values.forEach(v => xlsxText(v).split(/[\n,;]+/).forEach(x => {
+    x = x.trim();
+    if (x && !out.some(y => simpleNameKey(y) === simpleNameKey(x))) out.push(x);
+  }));
+  return out;
+}
+function parseXlsxRequirements(rows, headerRow) {
+  const out = { backgrounds: [], characters: [], eventArts: [] };
+  for (let r = 0; r < headerRow; r++) {
+    const row = rows[r] || [];
+    const raw = xlsxText(row[0]);
+    if (!raw) continue;
+    const parts = raw.split(/[:：]/, 2);
+    const key = xlsxHeaderKey(parts[0]);
+    const target = XLSX_REQUIREMENT_LABELS[key];
+    if (!target) continue;
+    const vals = row.slice(1);
+    if (parts.length > 1) vals.unshift(parts[1]);
+    splitXlsxAssetNames(vals).forEach(name => {
+      if (!out[target].some(x => simpleNameKey(x) === simpleNameKey(name))) out[target].push(name);
+    });
+  }
+  return out;
+}
+
 function ensureXlsxBackground(name, sum) {
   let b = backgroundByName(name);
   if (!b) {
@@ -3127,6 +3231,40 @@ function ensureXlsxBackground(name, sum) {
   if (!state.bgId) state.bgId = b.id;
   return b;
 }
+function allDialogueLines() {
+  return state.script.concat(state.routes.r1, state.routes.r2, state.routes.r3);
+}
+function existingEventArtSource(name) {
+  const key = eventArtNameKey(name);
+  for (const l of allDialogueLines()) {
+    const b = l && l.fx && l.fx.book;
+    if (b && b.src && eventArtNameKey(b.name) === key) return b.src;
+  }
+  const ev = state.events.find(e => e && e.src && eventArtNameKey(e.artName || e.title) === key);
+  return ev ? ev.src : '';
+}
+function ensureXlsxEventArt(name, sum) {
+  let art = eventArtByName(name);
+  if (!art) {
+    art = { id: 'ea_' + uid(), name: xlsxText(name) || '사건삽화', src: existingEventArtSource(name) || '' };
+    LIB_EVENT_ART.push(art);
+    sum.newEventArts.add(art.name);
+  }
+  if (!art.src) sum.missingEventArts.add(art.name);
+  return art;
+}
+function setEventArtSource(name, src) {
+  let art = eventArtByName(name);
+  if (!art) { art = { id: 'ea_' + uid(), name: xlsxText(name) || '사건삽화', src: '' }; LIB_EVENT_ART.push(art); }
+  art.src = src || '';
+  const key = eventArtNameKey(art.name);
+  allDialogueLines().forEach(l => {
+    const b = l && l.fx && l.fx.book;
+    if (b && eventArtNameKey(b.name) === key) b.src = art.src;
+  });
+  state.events.forEach(e => { if (eventArtNameKey(e.artName || '') === key) e.src = art.src; });
+  return art;
+}
 
 function isXlsxNarration(name) {
   const k = simpleNameKey(name).replace(/\s+/g, '');
@@ -3134,8 +3272,8 @@ function isXlsxNarration(name) {
 }
 
 function ensureXlsxPlaced(name, sum) {
-  const key = simpleNameKey(name);
-  let p = state.placed.find(x => simpleNameKey(x.name) === key);
+  const key = charNameKey(name);
+  let p = state.placed.find(x => charNameKey(x.name) === key);
   if (p) return p;
   let c = charLibByName(name);
   if (!c) {
@@ -3185,7 +3323,17 @@ function applyXlsxEffects(raw, line, p, sum) {
     if (/떨리는\s*효과|캐릭터\s*흔들림/.test(text)) { addAnim('shake'); done = true; }
     if (/배경\s*흔들림|화면\s*흔들림/.test(text)) { fx().screenShake = true; done = true; }
     if (/페이드\s*인\s*\/\s*아웃|페이드/.test(text)) { fx().fade = true; done = true; }
-    if (/^이미지\s*출력$/.test(text)) { fx().book = { title: '사건', src: '', name: '' }; sum.missingEffectImages++; done = true; }
+    const book = text.match(/^(?:이미지\s*출력|사건\s*삽화)(?:\s*[-:：]\s*(.+))?$/);
+    if (book) {
+      let artName = (book[1] || '').trim();
+      if (!artName && sum.requiredEventArts.length) {
+        artName = sum.requiredEventArts[sum.requiredEventArts.length === 1 ? 0 : (sum.eventArtCursor++ % sum.requiredEventArts.length)];
+      }
+      const art = artName ? ensureXlsxEventArt(artName, sum) : null;
+      fx().book = { title: '사건', src: art ? art.src : '', name: art ? art.name : artName };
+      if (!artName) sum.missingEffectImages++;
+      done = true;
+    }
     const item = text.match(/아이템\s*이미지\s*[-:：]?\s*(.*)$/);
     if (item) { fx().item = { name: item[1].trim() || '아이템', src: '' }; sum.missingEffectImages++; done = true; }
     if (/동시에\s*말하기/.test(text)) { fx().simultaneous = true; done = true; }
@@ -3214,6 +3362,52 @@ function applyXlsxEffects(raw, line, p, sum) {
   cleanLineFx(line);
 }
 
+function xlsxAssetInputRow(kind, label, name, multiple) {
+  return `<div class="xlsxAsset" data-kind="${kind}" data-name="${esc(name)}"><b>${label}</b><span class="assetName">${esc(name)}</span><span class="assetStatus warn">이미지 필요</span><label class="uploadBtn">파일 선택<input type="file" accept="image/*" ${multiple ? 'multiple' : ''} hidden></label></div>`;
+}
+function bindXlsxAssetInputs(box) {
+  box.querySelectorAll('.xlsxAsset input[type=file]').forEach(input => {
+    input.onchange = async () => {
+      const row = input.closest('.xlsxAsset');
+      const kind = row.dataset.kind, name = row.dataset.name;
+      const files = [...(input.files || [])].filter(f => f.type.startsWith('image/'));
+      input.value = '';
+      if (!files.length) return;
+      row.querySelector('.assetStatus').textContent = '연결 중…';
+      try {
+        if (kind === 'bg') {
+          const src = await readAsDataURL(files[0]);
+          let b = backgroundByName(name);
+          if (!b) { b = { id:'b_'+uid(), name, src:'', builtin:false, fav:false }; LIB_BG.push(b); }
+          b.src = src || '';
+          if (!state.bgId) state.bgId = b.id;
+        } else if (kind === 'char') {
+          let c = charLibByName(name);
+          if (!c) { c = { id:'c_'+uid(), name, builtin:false, fav:false, images:[] }; LIB_CHAR.push(c); }
+          for (const f of files) {
+            const stem = f.name.replace(/\.[^.]+$/, '');
+            const imgName = files.length === 1 && charNameKey(stem) === charNameKey(name) ? '기본' : stem;
+            if (imageIndexByName(c.images, imgName) >= 0) continue;
+            const src = await processCharFile(f);
+            if (src) c.images.push({ name: imgName, src });
+          }
+          if (!state.placed.some(p => p.libId === c.id) && state.placed.length < MAX_PLACED) placeChar(c.id, 0, { name:c.name, silent:true });
+        } else if (kind === 'event') {
+          const src = await readAsDataURL(files[0]);
+          setEventArtSource(name, src || '');
+        }
+        row.classList.add('done');
+        row.querySelector('.assetStatus').classList.remove('warn');
+        row.querySelector('.assetStatus').textContent = '연결됨';
+        appliedBgSrc = null; shownEventId = null;
+        renderBgLib(); renderChars(); renderCharLib(); renderPlacedList(); renderSpeakerOptions(); renderScriptList(); updateStage(); saveState();
+      } catch (e) {
+        console.warn(e);
+        row.querySelector('.assetStatus').textContent = '연결 실패';
+      }
+    };
+  });
+}
 function showXlsxReport(file, sum, count, mode) {
   const box = $('xlsxReport');
   if (!box) return;
@@ -3221,18 +3415,29 @@ function showXlsxReport(file, sum, count, mode) {
     `<b>${esc(file.name)}</b> — ${count}개 대사를 ${mode === 'replace' ? '교체' : '추가'}했습니다.`,
     `인식한 시트: ${sum.sheets.map(esc).join(', ')}`,
   ];
+  if (sum.requiredBackgrounds.length || sum.requiredCharacters.length || sum.requiredEventArts.length) {
+    rows.push(`필요 자산: 배경 ${sum.requiredBackgrounds.length}개 · 캐릭터 ${sum.requiredCharacters.length}명 · 사건삽화 ${sum.requiredEventArts.length}개`);
+  }
   if (sum.missingPlaces.size) rows.push(`<span class="warn">이미지 연결이 필요한 배경 ${sum.missingPlaces.size}개: ${esc([...sum.missingPlaces].join(', '))}</span>`);
   if (sum.missingChars.size) rows.push(`<span class="warn">사진 연결이 필요한 인물 ${sum.missingChars.size}명: ${esc([...sum.missingChars].join(', '))}</span>`);
+  if (sum.missingEventArts.size) rows.push(`<span class="warn">이미지 연결이 필요한 사건삽화 ${sum.missingEventArts.size}개: ${esc([...sum.missingEventArts].join(', '))}</span>`);
   if (sum.missingFaces.size) rows.push(`<span class="warn">현재 이미지 파일명과 연결되지 않은 face ${sum.missingFaces.size}개: ${esc([...sum.missingFaces].join(', '))}</span>`);
   if (sum.skippedChars.size) rows.push(`<span class="warn">최대 ${MAX_PLACED}명 제한으로 제외된 인물: ${esc([...sum.skippedChars].join(', '))}</span>`);
   if (sum.emptyScripts) rows.push(`script가 비어 있어 건너뛴 행: ${sum.emptyScripts}개`);
   if (sum.endMarkers) rows.push(`종료 표식으로 처리한 행: ${sum.endMarkers}개`);
   if (sum.appliedEffects) rows.push(`적용한 effect 지시: ${sum.appliedEffects}개`);
-  if (sum.missingEffectImages) rows.push(`<span class="warn">이미지를 직접 연결해야 하는 책/아이템 효과: ${sum.missingEffectImages}개</span>`);
+  if (sum.missingEffectImages) rows.push(`<span class="warn">대사에서 직접 연결해야 하는 이름 없는 책/아이템 효과: ${sum.missingEffectImages}개</span>`);
   if (sum.unknownEffects.size) rows.push(`<span class="warn">원문 메모로 남긴 미지원 effect: ${esc([...sum.unknownEffects].join(', '))}</span>`);
-  rows.push('etc. 열과 헤더 위 참고 정보는 변환하지 않았습니다. 같은 이름의 이미지 파일/폴더를 나중에 업로드해도 임시 항목에 자동 연결됩니다.');
+  rows.push('etc. 열과 헤더 위의 세 가지 필요 자산 외 정보는 변환하지 않습니다. 같은 이름으로 이미 등록된 자산은 자동 연결됩니다.');
+
+  const assetRows = [];
+  [...sum.missingPlaces].forEach(name => assetRows.push(xlsxAssetInputRow('bg', '배경', name, false)));
+  [...sum.missingChars].forEach(name => assetRows.push(xlsxAssetInputRow('char', '캐릭터', name, true)));
+  [...sum.missingEventArts].forEach(name => assetRows.push(xlsxAssetInputRow('event', '사건삽화', name, false)));
+  if (assetRows.length) rows.push(`<div class="xlsxAssets"><b>누락 자산 연결</b>${assetRows.join('')}</div>`);
   box.innerHTML = rows.join('<br>');
   box.classList.remove('hidden');
+  bindXlsxAssetInputs(box);
 }
 
 async function handleXlsxUpload(file, mode) {
@@ -3250,6 +3455,8 @@ async function handleXlsxUpload(file, mode) {
   const sum = {
     sheets: [], newPlaces: new Set(), missingPlaces: new Set(), newChars: new Set(),
     missingChars: new Set(), missingFaces: new Set(), skippedChars: new Set(),
+    newEventArts: new Set(), missingEventArts: new Set(),
+    requiredBackgrounds: [], requiredCharacters: [], requiredEventArts: [], eventArtCursor: 0,
     unknownEffects: new Set(), emptyScripts: 0, endMarkers: 0, appliedEffects: 0, missingEffectImages: 0,
   };
   const converted = [];
@@ -3260,6 +3467,19 @@ async function handleXlsxUpload(file, mode) {
     const head = findXlsxHeader(rows);
     if (!head) continue;
     sum.sheets.push(sheetName);
+    const req = parseXlsxRequirements(rows, head.row);
+    req.backgrounds.forEach(name => {
+      if (!sum.requiredBackgrounds.some(x => bgNameKey(x) === bgNameKey(name))) sum.requiredBackgrounds.push(name);
+      ensureXlsxBackground(name, sum);
+    });
+    req.characters.forEach(name => {
+      if (!sum.requiredCharacters.some(x => charNameKey(x) === charNameKey(name))) sum.requiredCharacters.push(name);
+      ensureXlsxPlaced(name, sum);
+    });
+    req.eventArts.forEach(name => {
+      const art = ensureXlsxEventArt(name, sum);
+      if (!sum.requiredEventArts.some(x => eventArtNameKey(x) === eventArtNameKey(art.name))) sum.requiredEventArts.push(art.name);
+    });
     let pendingBg = null;
 
     for (let r = head.row + 1; r < rows.length; r++) {
@@ -3331,11 +3551,9 @@ async function handleXlsxUpload(file, mode) {
 function downloadXlsxTemplate() {
   if (typeof XLSX === 'undefined') { alert('엑셀 처리 모듈을 불러오지 못했습니다.'); return; }
   const rows = [
-    ['재생 트리거', '', '', '', '', ''],
-    ['필수선행', '', '', '', '', ''],
-    ['필요캐릭터', '', '', '', '', ''],
-    ['트리거 종류', '', '', '', '', ''],
-    ['날짜 시작', '', '', '', '', ''],
+    ['필요 배경', '', '', '', '', ''],
+    ['필요 캐릭터', '', '', '', '', ''],
+    ['필요 사건삽화', '', '', '', '', ''],
     ['', '', '', '', '', ''],
     ['place', 'character', 'face', 'script', 'effect', 'etc.'],
   ];
@@ -3991,8 +4209,10 @@ async function init() {
   $('recallOverlay').addEventListener('click', e => { if (e.target === $('recallOverlay')) closeRecall(); });
 
   $('bgUpload').addEventListener('change', e => { if (e.target.files.length) handleBgUpload(e.target.files); e.target.value = ''; });
+  $('clearBgBtn').addEventListener('click', clearAllBackgrounds);
   $('charUpload').addEventListener('change', e => { if (e.target.files[0]) handleCharUpload(e.target.files[0]); e.target.value = ''; });
   $('charFolderUpload').addEventListener('change', e => { if (e.target.files.length) handleFolderUpload(e.target.files); e.target.value = ''; });
+  $('clearCharBtn').addEventListener('click', clearAllCharacters);
 
   $('addLineBtn').addEventListener('click', addLineFromInput);
   $('lineInput').addEventListener('keydown', e => {
@@ -4027,13 +4247,16 @@ async function init() {
     if (isNaN(from) || from < 0) from = 0;
     if (isNaN(to) || to < 0) to = state.script.length - 1;
     if (to < from) [from, to] = [to, from];
-    state.events.push({ id: uid(), title: $('evTitle').value.trim(), src: evImgPending.src, from, to });
+    const artName = evImgPending.name || $('evTitle').value.trim() || '사건삽화';
+    setEventArtSource(artName, evImgPending.src);
+    state.events.push({ id: uid(), title: $('evTitle').value.trim(), src: evImgPending.src, artName, from, to });
     $('evTitle').value = '';
     evImgPending = null;
     $('evImgName').textContent = '삽화 없음 (필수)';
     renderEvents(); updateStage(); saveState();
     toast(t('tsEventAdded'));
   });
+  $('clearEventBtn').addEventListener('click', clearAllEvents);
   $('addChoiceBtn').addEventListener('click', () => {
     if (state.uiRoute !== 'main') { state.uiRoute = 'main'; renderScriptList(); }
     state.script.push({ type: 'choice', options: ['', '', ''] });
@@ -4268,5 +4491,5 @@ async function handleScriptFile(file) {
 document.addEventListener('DOMContentLoaded', init);
 
 </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2eeae5408ecd1e5',t:'MTc4NzM2ODE5MA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2f05aaa3d3f723a',t:'MTc4NzM4NTczNA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
