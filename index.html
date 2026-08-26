@@ -6,6 +6,7 @@
 <title>활협전 대화 시현기 (팬메이드)</title>
 <style>
 /* ================= 활협전 대화 시현기 (팬메이드) ================= */
+/* 원작 게임의 이미지·아이콘·음원 없음. 번역용 고유명사 문자열만 내장. */
 :root{
   --accent:#e0a04a;
   --accent2:#f2c877;
@@ -400,6 +401,10 @@ input[type=checkbox]{accent-color:var(--accent);width:16px;height:16px;cursor:po
 }
 .xlsxReport b{color:var(--accent2)}
 .xlsxReport .warn{color:#e3a88e}
+.multiScriptBox{margin-top:10px;padding:8px 10px;border:1px dashed #4a4034;border-radius:9px;background:#18140f}
+.multiScriptBox summary{cursor:pointer;color:var(--accent2);font-family:var(--serif);font-weight:700}
+.multiScriptBox[open] summary{margin-bottom:8px}
+#multiScriptInput{display:block;width:100%;min-height:220px;margin-top:8px;resize:vertical}
 .xlsxAssets{display:flex;flex-direction:column;gap:6px;margin-top:9px;padding-top:8px;border-top:1px dashed #5a4a36}
 .xlsxAsset{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:5px 7px;border-radius:7px;background:#201a13}
 .xlsxAsset b{min-width:70px;font-size:11.5px}
@@ -894,6 +899,18 @@ header{position:relative}
       </div>
       <p class="hint" data-i18n="xlsx_hint">엑셀 상단의 필요 배경 · 필요 캐릭터 · 필요 사건삽화와 place · character · face · script · effect 열을 읽습니다. 같은 이름의 등록 자산은 자동 연결하고, 없는 자산은 불러오기 결과에서 이미지를 선택할 수 있습니다. etc. 열은 무시합니다.</p>
       <div id="xlsxReport" class="xlsxReport hidden" aria-live="polite"></div>
+      <details class="multiScriptBox">
+        <summary data-i18n="multi_script_title">다국어 번역문 직접 배분</summary>
+        <p class="hint" data-i18n="multi_script_hint">[대만 번체 (繁體中文)], [일본어 (日本語)], [중국 간체], [영어] 같은 언어 제목으로 대본을 나누세요. 첫 구역은 선택한 원문 언어로 처리하며, 각 언어의 문단 순서와 개수가 같아야 합니다.</p>
+        <div class="row">
+          <label class="evLabel"><span data-i18n="translate_source">원문 언어</span><select id="multiSourceLang"><option value="ko">한국어</option><option value="ja">日本語</option><option value="tw">台灣繁體</option><option value="cn">中国简体</option><option value="en">English</option></select></label>
+          <select id="multiScriptMode"><option value="replace" data-i18n="xlsx_replace">기존 대사 교체</option><option value="append" data-i18n="xlsx_append">기존 대사 뒤에 추가</option></select>
+          <button id="multiScriptApply" class="primary" data-i18n="multi_script_apply">다국어 대본 배분</button>
+          <button id="multiXlsxTemplate" data-i18n="multi_xlsx_template">다국어 Excel 양식 저장</button>
+        </div>
+        <textarea id="multiScriptInput" rows="12" data-i18n-ph="multi_script_ph" placeholder="한국어 원문...&#10;&#10;**[대만 번체 (繁體中文)]**&#10;繁體中文翻譯...&#10;&#10;**[일본어 (日本語)]**&#10;日本語訳..."></textarea>
+        <div id="multiScriptReport" class="xlsxReport hidden"></div>
+      </details>
       <div class="routetabsWrap">
         <span class="rtLabel" data-i18n="rt_label">루트</span>
         <span id="routeTabs"></span>
@@ -1034,6 +1051,7 @@ ko: {
   xlsx_file: '규격 엑셀 불러오기', xlsx_append: '기존 대사 뒤에 추가', xlsx_replace: '기존 대사 교체',
   xlsx_mode_tip: '엑셀 대사를 현재 내용 뒤에 추가할지, 기존 내용을 교체할지 선택', xlsx_template: '빈 엑셀 양식 저장',
   xlsx_hint: '엑셀 상단의 필요 배경 · 필요 캐릭터 · 필요 사건삽화와 place · character · face · script · effect 열을 읽습니다. 같은 이름의 등록 자산은 자동 연결하고, 없는 자산은 불러오기 결과에서 이미지를 선택할 수 있습니다. etc. 열은 무시합니다.',
+  multi_script_title: '다국어 번역문 직접 배분', multi_script_hint: '[대만 번체 (繁體中文)], [일본어 (日本語)], [중국 간체], [영어] 같은 언어 제목으로 대본을 나누세요. 첫 구역은 선택한 원문 언어이며, 각 언어의 문단 순서와 개수가 같아야 합니다.', multi_script_apply: '다국어 대본 배분', multi_xlsx_template: '다국어 Excel 양식 저장', multi_script_ph: '한국어 원문...\n\n**[대만 번체 (繁體中文)]**\n繁體中文翻譯...\n\n**[일본어 (日本語)]**\n日本語訳...', multi_script_done_f: '{0}개 문단을 {1}개 언어로 배분했습니다.', multi_script_mismatch_f: '{0} 문단 수가 원문과 다릅니다. 원문 {1}개 / 번역 {2}개', multi_script_need_two: '원문과 번역 언어 구역을 하나 이상 입력하세요.',
   bulk_ph: '[이름] = 대사  또는  이름 : 대사 (꺾쇠 생략 가능) — 구분자(=, :) 앞의 이름을 화자로 인식합니다.\n\n· 이름이 나오는 줄마다 새 대사입니다. 빈 줄 없이 연속해서 붙여도 됩니다.\n· 대사 안의 줄바꿈은 실제 줄바꿈 또는 \\n(₩n) 문자를 모두 인식합니다.\n· [나레이션] = 화자 없는 지문. 구분자 없는 문단도 나레이션으로 처리됩니다.\n· 이름 뒤 (괄호)는 표정 이름으로 인식 — 인물의 이미지 파일명과 같으면 자동 지정.  예) [조활(당황1)] = …\n· 괄호 안이 한자뿐이면 이름의 한자 주석으로 보고 화자 이름에서 제외합니다.\n· [선택지] = 문구A | 문구B | 문구C → 분기 선택지. 옵션은 순서대로 루트1·루트2·루트3로 연결됩니다.\n· [루트1] / [루트2] / [루트3] 줄 이후의 대사는 해당 루트에, [공통루트] 줄 이후는 공통루트에 쌓입니다.\n· 목록에 없는 이름은 사진 없이 이름만으로 인물이 생성됩니다. (나중에 ② 등장인물에서 사진 추가 가능)',
   load_sample: '예시 대사 불러오기', clear_all: '전체 삭제', json_save: 'JSON 저장', json_load: 'JSON 불러오기',
   rt_label: '루트', add_choice: '⑂ 선택지 추가',
@@ -1128,6 +1146,7 @@ ja: {
   xlsx_file: '規格Excelを読み込む', xlsx_append: '既存のセリフに追加', xlsx_replace: '既存のセリフを置換',
   xlsx_mode_tip: 'Excelのセリフを追加するか、現在の内容と置き換えるかを選択', xlsx_template: '空のExcelひな形を保存',
   xlsx_hint: '上部の「必要背景・必要キャラクター・必要事件挿絵」と place・character・face・script・effect 列を読み取ります。同名の登録済み素材は自動接続し、足りない画像は読み込み結果から選択できます。etc. 列は無視します。',
+  multi_script_title: '多言語翻訳文を直接振り分け', multi_script_hint: '[台灣繁體]、[日本語]、[中国简体]、[English]のような言語見出しで台本を分けます。最初の区画は選択した原文言語として扱い、各言語の段落順と数を一致させてください。', multi_script_apply: '多言語台本を振り分け', multi_xlsx_template: '多言語Excel様式を保存', multi_script_ph: '原文...\n\n**[台灣繁體]**\n繁體中文翻譯...\n\n**[English]**\nEnglish translation...', multi_script_done_f: '{0}段落を{1}言語に振り分けました。', multi_script_mismatch_f: '{0}の段落数が原文と異なります。原文{1}件 / 翻訳{2}件', multi_script_need_two: '原文と少なくとも1つの翻訳言語区画を入力してください。',
   bulk_ph: '[名前] = セリフ  または  名前 : セリフ （括弧は省略可）— 区切り（=, :）の前の名前を話者として認識します。\n\n· 名前の出る行ごとに新しいセリフです。空行なしで連続して貼っても構いません。\n· セリフ内の改行は実際の改行・\\n（₩n）文字の両方を認識します。\n· [ナレーション] = 話者なしの地の文。区切りのない段落もナレーションになります。\n· 名前の後の（括弧）は表情名として認識 — 画像ファイル名と一致すれば自動指定。 例）[焦活(動揺1)] = …\n· 括弧の中が漢字だけの場合は名前の注記とみなし、話者名から外します。\n· [選択肢] = 文A | 文B | 文C → 分岐選択肢。順にルート1・ルート2・ルート3へ接続されます。\n· [ルート1] / [ルート2] / [ルート3] の行以降はそのルートに、[共通ルート] の行以降は共通ルートに積まれます。\n· 一覧にない名前は写真なしの名前だけの人物として生成されます。（後で②登場人物で写真追加可）',
   load_sample: '例文セリフを読み込む', clear_all: 'すべて削除', json_save: 'JSON保存', json_load: 'JSON読込',
   rt_label: 'ルート', add_choice: '⑂ 選択肢を追加',
@@ -1222,6 +1241,7 @@ tw: {
   xlsx_file: '匯入規格 Excel', xlsx_append: '附加於現有台詞', xlsx_replace: '取代現有台詞',
   xlsx_mode_tip: '選擇將 Excel 台詞附加至目前內容，或取代目前內容', xlsx_template: '下載空白 Excel 範本',
   xlsx_hint: '讀取上方的「需要背景、需要角色、需要事件插圖」以及 place、character、face、script、effect 欄。同名的已登錄素材會自動連結，缺少的圖片可在匯入結果中選擇。忽略 etc. 欄。',
+  multi_script_title: '直接分配多語翻譯稿', multi_script_hint: '請以[台灣繁體]、[日本語]、[中国简体]、[English]等語言標題分隔劇本。第一區視為所選原文語言，各語言的段落順序與數量必須一致。', multi_script_apply: '分配多語劇本', multi_xlsx_template: '儲存多語Excel格式', multi_script_ph: '原文...\n\n**[日本語]**\n日本語訳...\n\n**[English]**\nEnglish translation...', multi_script_done_f: '已將{0}個段落分配到{1}種語言。', multi_script_mismatch_f: '{0}的段落數與原文不同。原文{1}個 / 翻譯{2}個', multi_script_need_two: '請輸入原文及至少一個翻譯語言區塊。',
   bulk_ph: '[名字] = 台詞  或  名字 : 台詞 （括號可省略）— 以分隔符（=, :）前的名字為說話者。\n\n· 名字出現的每一行都是新台詞，無需空行可連續貼上。\n· 台詞內換行可接受實際換行或 \\n（₩n）字元。\n· [旁白] = 無說話者的敘述。無分隔符的段落也視為旁白。\n· 名字後（括號）視為表情名 — 與圖片檔名相符則自動指定。 例）[焦活(慌張1)] = …\n· 括號內僅有漢字時視為名字註記，自說話者名稱中排除。\n· [選項] = 文A | 文B | 文C → 分歧選項。依序連接至路線1·路線2·路線3。\n· [路線1] / [路線2] / [路線3] 之後的台詞歸入該路線，[共通路線] 之後歸入共通路線。\n· 清單外的名字會建立只有名字（無照片）的人物。（之後可於②登場人物補照片）',
   load_sample: '載入範例台詞', clear_all: '全部刪除', json_save: 'JSON 儲存', json_load: 'JSON 讀取',
   rt_label: '路線', add_choice: '⑂ 新增選項',
@@ -1316,6 +1336,7 @@ cn: {
   xlsx_file: '导入规范 Excel', xlsx_append: '追加到现有台词', xlsx_replace: '替换现有台词',
   xlsx_mode_tip: '选择将 Excel 台词追加到当前内容，或替换当前内容', xlsx_template: '下载空白 Excel 模板',
   xlsx_hint: '读取上方的“需要背景、需要角色、需要事件插图”以及 place、character、face、script、effect 列。同名的已登记素材会自动连接，缺少的图片可在导入结果中选择。忽略 etc. 列。',
+  multi_script_title: '直接分配多语翻译稿', multi_script_hint: '请用[台灣繁體]、[日本語]、[中国简体]、[English]等语言标题分隔剧本。第一区视为所选原文语言，各语言的段落顺序和数量必须一致。', multi_script_apply: '分配多语剧本', multi_xlsx_template: '保存多语Excel格式', multi_script_ph: '原文...\n\n**[日本語]**\n日本語訳...\n\n**[English]**\nEnglish translation...', multi_script_done_f: '已将{0}个段落分配到{1}种语言。', multi_script_mismatch_f: '{0}的段落数与原文不同。原文{1}个 / 翻译{2}个', multi_script_need_two: '请输入原文及至少一个翻译语言区块。',
   bulk_ph: '[名字] = 台词  或  名字 : 台词 （括号可省略）— 以分隔符（=, :）前的名字为说话者。\n\n· 名字出现的每一行都是新台词，无需空行可连续粘贴。\n· 台词内换行可接受实际换行或 \\n（₩n）字符。\n· [旁白] = 无说话者的叙述。无分隔符的段落也视为旁白。\n· 名字后（括号）视为表情名 — 与图片文件名相符则自动指定。 例）[焦活(慌张1)] = …\n· 括号内仅有汉字时视为名字注记，从说话者名中排除。\n· [选项] = 文A | 文B | 文C → 分歧选项。依序连接至路线1·路线2·路线3。\n· [路线1] / [路线2] / [路线3] 之后的台词归入该路线，[共通路线] 之后归入共通路线。\n· 列表外的名字会创建只有名字（无照片）的人物。（之后可于②登场人物补照片）',
   load_sample: '载入范例台词', clear_all: '全部删除', json_save: 'JSON 保存', json_load: 'JSON 读取',
   rt_label: '路线', add_choice: '⑂ 新增选项',
@@ -1410,6 +1431,7 @@ en: {
   xlsx_file: 'Import formatted Excel', xlsx_append: 'Append to existing lines', xlsx_replace: 'Replace existing lines',
   xlsx_mode_tip: 'Choose whether to append the Excel dialogue or replace the current script', xlsx_template: 'Save blank Excel template',
   xlsx_hint: 'Reads Required Backgrounds, Required Characters, and Required Event Art above the place, character, face, script, and effect columns. Registered assets with matching names connect automatically; missing images can be selected in the import result. The etc. column is ignored.',
+  multi_script_title: 'Distribute a multilingual translation', multi_script_hint: 'Separate the script with language headings such as [台灣繁體], [日本語], [中国简体], and [English]. The first section uses the selected source language. Every language must have the same paragraph order and count.', multi_script_apply: 'Distribute multilingual script', multi_xlsx_template: 'Save multilingual Excel template', multi_script_ph: 'Source text...\n\n**[台灣繁體]**\nTraditional Chinese...\n\n**[日本語]**\nJapanese...', multi_script_done_f: 'Distributed {0} paragraphs across {1} languages.', multi_script_mismatch_f: '{0} has a different paragraph count. Source: {1} / Translation: {2}', multi_script_need_two: 'Enter the source section and at least one translated language section.',
   bulk_ph: '[Name] = line  or  Name : line (brackets optional) — the name before the separator (=, :) becomes the speaker.\n\n· Every line with a name starts a new line of dialogue. Pasting back-to-back without blank lines is fine.\n· Line breaks inside dialogue accept real newlines or the literal \\n (₩n).\n· [Narration] = speakerless narration. Paragraphs without a separator also become narration.\n· (Parentheses) after a name are read as an expression name — auto-assigned when it matches an image filename.  e.g. [Zhao Huo(startled1)] = …\n· Parentheses containing only Han characters count as name annotations and are dropped from the speaker name.\n· [Choice] = A | B | C → a branching choice. Options map to Route 1·2·3 in order.\n· Lines after [Route 1] / [Route 2] / [Route 3] go to that route; lines after [Common Route] go to the common route.\n· Names not in the list create name-only characters without photos. (Add photos later in ② Characters)',
   load_sample: 'Load example script', clear_all: 'Delete all', json_save: 'Save JSON', json_load: 'Load JSON',
   rt_label: 'Route', add_choice: '⑂ Add choice',
@@ -2309,7 +2331,7 @@ function addCatalogCharacter() {
 
 const nameOf = cid => {
   if (cid === NARR) return t('narr');
-  const p = placedById(cid); return p ? p.name : '???';
+  const p = placedById(cid); return p ? contentValue(p.name,p.names) : '???';
 };
 
 function toast(msg) {
@@ -2384,7 +2406,7 @@ function serialize() {
     bgId: state.bgId,
     bgs: LIB_BG.map(b => ({ id: b.id, name: b.name, fav: !!b.fav, builtin: !!b.builtin, src: b.builtin ? null : b.src })),
     chars: LIB_CHAR.map(c => ({ id: c.id, charKey: c.charKey || null, name: c.name, customName: !!c.customName, fav: !!c.fav, builtin: !!c.builtin, images: c.builtin ? null : c.images, icons: Array.isArray(c.icons) ? c.icons : [] })),
-    placed: state.placed.map(p => ({ id: p.id, libId: p.libId, charKey: p.charKey || null, name: p.name, customName: !!p.customName, iconSrc: p.iconSrc || null, iconIdx: p.iconIdx != null ? p.iconIdx : 0, exprIdx: p.exprIdx, x: p.x, size: p.size, flip: p.flip })), 
+    placed: state.placed.map(p => ({ id: p.id, libId: p.libId, charKey: p.charKey || null, name: p.name, names:cleanI18nMap(p.names), customName: !!p.customName, iconSrc: p.iconSrc || null, iconIdx: p.iconIdx != null ? p.iconIdx : 0, exprIdx: p.exprIdx, x: p.x, size: p.size, flip: p.flip })), 
     script: state.script.map(l => serializeLine(l)),
     routes: {
       r1: state.routes.r1.map(l => serializeLine(l)),
@@ -2510,7 +2532,7 @@ function deserializeV2(d) {
     const custom = !!p.customName;
     state.placed.push({   // 배치 id는 보존해야 대사 무대 오버라이드(id 기준)와 연결이 유지됨
       id: (p.id && !state.placed.some(q => q.id === p.id)) ? p.id : uid(), libId: c.id, charKey: ck || null,
-      name: ck && !custom ? charDisplayName(ck) : (p.name || c.name), customName: custom,
+      name: ck && !custom ? charDisplayName(ck) : (p.name || c.name), names:cleanI18nMap(p.names), customName: custom,
       iconSrc: typeof p.iconSrc === 'string' ? p.iconSrc : '',
       iconIdx: p.iconIdx != null && isFinite(+p.iconIdx) ? Math.max(0,+p.iconIdx|0) : (p.iconSrc ? (characterIconKey(ck)?1:0) : 0),
       exprIdx: Math.max(0, Math.min(+p.exprIdx || 0, c.images.length - 1)),
@@ -3272,7 +3294,7 @@ function renderPlacedList() {
       ${cur
         ? `<img class="pi-thumb" src="${cur.src}" title="클릭: 이미지 선택 창 열기" alt="">`
         : `<span class="pi-thumb noImg" title="${t('photo_none')}">${esc(p.name[0] || '?')}</span>`}
-      <input type="text" class="pi-name" value="${esc(p.name)}" title="이름">
+      <input type="text" class="pi-name" value="${esc(nameOf(p.id))}" title="이름">
       <span class="placedIconBox" title="${iconSrc ? esc(p.name) : t('icon_none')}">${iconSrc ? `<img src="${iconSrc}" alt="">` : `<i>${t('icon_none')}</i>`}</span>
       <span class="placedIconCtl">
         ${iconOptions.length ? `<select class="pi-icon-select">${iconOptions.map((im,k)=>`<option value="${k}" ${k===iconIdx?'selected':''}>${esc(im.name)}</option>`).join('')}</select>` : ''}
@@ -3288,8 +3310,8 @@ function renderPlacedList() {
     const nameI = row.querySelector('.pi-name');
     nameI.oninput = () => {
       const official = p.charKey ? charDisplayName(p.charKey) : '';
-      p.name = nameI.value.trim() || official || '인물';
-      p.customName = !!p.charKey && p.name !== official;
+      const value=nameI.value.trim()||official||'인물';if(p.names&&Object.keys(p.names).length){p.names[LANG]=value;if(!p.customName&&p.charKey&&CHARACTER_CATALOG[p.charKey])p.customName=value!==official;}else p.name=value;
+      p.customName = p.customName || (!!p.charKey && value !== official);
       renderSpeakerOptions(); renderScriptList(); saveState(); if (state.idx >= 0) updateDialogName();
     };
     const refreshIconViews=()=>{
@@ -4583,8 +4605,9 @@ function importJson(data) {
    · effect는 지원 가능한 연출로 변환, etc. 및 헤더 위 참고 정보는 읽지 않음
    · place/character가 아직 업로드되지 않았으면 이미지 없는 임시 항목을 생성
    ===================================================================== */
-const XLSX_CORE_HEADERS = ['place', 'character', 'face', 'script'];
-const XLSX_KNOWN_HEADERS = [...XLSX_CORE_HEADERS, 'effect', 'etc.'];
+const XLSX_CORE_HEADERS = ['place', 'character', 'face'];
+const XLSX_SCRIPT_HEADERS = ['script','script_ko','script_tw','script_cn','script_ja','script_en'];
+const XLSX_KNOWN_HEADERS = [...XLSX_CORE_HEADERS, ...XLSX_SCRIPT_HEADERS, 'source_lang', 'effect', 'etc.'];
 const XLSX_END_MARKERS = new Set(['종료', '끝', 'end']);
 const xlsxText = v => String(v == null ? '' : v).replace(/\r\n?/g, '\n').trim();
 const xlsxHeaderKey = v => xlsxText(v).replace(/^\uFEFF/, '').toLowerCase().replace(/\s+/g, '');
@@ -4596,7 +4619,7 @@ function findXlsxHeader(rows) {
       const k = xlsxHeaderKey(v);
       if (XLSX_KNOWN_HEADERS.includes(k) && map[k] == null) map[k] = c;
     });
-    if (XLSX_CORE_HEADERS.every(k => map[k] != null)) return { row: r, map };
+    if (XLSX_CORE_HEADERS.every(k => map[k] != null) && XLSX_SCRIPT_HEADERS.some(k=>map[k]!=null)) return { row: r, map };
   }
   return null;
 }
@@ -4907,7 +4930,12 @@ async function handleXlsxUpload(file, mode) {
       const place = xlsxText(row[head.map.place]);
       const character = xlsxText(row[head.map.character]);
       const face = xlsxText(row[head.map.face]);
-      const script = xlsxText(row[head.map.script]);
+      const scripts={};CONTENT_LANGS.forEach(lang=>{const col=head.map['script_'+lang];if(col!=null){const v=xlsxText(row[col]);if(v)scripts[lang]=v;}});
+      const legacyScript=head.map.script!=null?xlsxText(row[head.map.script]):'';
+      const requestedSource=head.map.source_lang!=null?simpleNameKey(row[head.map.source_lang]):'';
+      const sourceLang=CONTENT_LANGS.includes(requestedSource)?requestedSource:(legacyScript?LANG:(CONTENT_LANGS.find(lang=>scripts[lang])||LANG));
+      const script=scripts[sourceLang]||legacyScript||Object.values(scripts)[0]||'';
+      if(script&&!scripts[sourceLang])scripts[sourceLang]=script;
       const effect = head.map.effect != null ? xlsxText(row[head.map.effect]) : '';
 
       if (place) pendingBg = ensureXlsxBackground(place, sum).id;
@@ -4936,7 +4964,7 @@ async function handleXlsxUpload(file, mode) {
         }
       }
 
-      const line = { cid, text: script, bg: pendingBg, expr, exprTags, stage: null, fx: null };
+      const line = { cid, text: script, texts:Object.keys(scripts).length?scripts:null, sourceLang, bg: pendingBg, expr, exprTags, stage: null, fx: null };
       applyXlsxEffects(effect, line, cid === NARR ? null : placedById(cid), sum);
       converted.push(line);
       pendingBg = null;
@@ -4944,7 +4972,7 @@ async function handleXlsxUpload(file, mode) {
   }
 
   if (!sum.sheets.length) {
-    alert('place · character · face · script 헤더가 있는 시트를 찾지 못했습니다. 열 이름을 확인하세요.');
+    alert('place · character · face와 script 또는 script_ko/tw/cn/ja/en 헤더가 있는 시트를 찾지 못했습니다.');
     return;
   }
   if (!converted.length) {
@@ -4957,7 +4985,9 @@ async function handleXlsxUpload(file, mode) {
     state.routes = { r1: [], r2: [], r3: [] };
     state.events = [];
   }
-  state.script.push(...converted);invalidateTranslations();
+  state.script.push(...converted);
+  const importedCompleted=CONTENT_LANGS.filter(lang=>converted.every(l=>!String(l.text||'').trim()||(l.texts&&typeof l.texts[lang]==='string'&&l.texts[lang]!=='')));
+  if(importedCompleted.length>1)state.translation={sourceLang:converted[0].sourceLang||LANG,completed:importedCompleted,glossaryVersion:GLOSSARY_VERSION,updatedAt:Date.now()};else invalidateTranslations();
   state.idx = -1;
   state.uiRoute = 'main';
   resetBranchPlayback(); closeChoiceUI(); hideDialog();
@@ -5576,7 +5606,7 @@ function buildPlayerData() {
     titleLogo: TITLE_LOGO_SRC,
     defaultBg: (bgById(state.bgId) || LIB_BG[0] || { src: '' }).src,
     placed: state.placed.map(p => ({
-      name: p.name, names:multilingual&&!p.customName&&p.charKey&&CHARACTER_CATALOG[p.charKey]?cleanI18nMap(CHARACTER_CATALOG[p.charKey]):null, icon: baseIconIndexOfPlaced(p), icons: iconOptionsOfPlaced(p).map(im=>({name:im.name,src:im.src})), x: p.x, size: p.size, flip: p.flip, expr: p.exprIdx,
+      name: nameOf(p.id), names:multilingual?(p.names&&Object.keys(p.names).length?cleanI18nMap(p.names):(!p.customName&&p.charKey&&CHARACTER_CATALOG[p.charKey]?cleanI18nMap(CHARACTER_CATALOG[p.charKey]):null)):null, icon: baseIconIndexOfPlaced(p), icons: iconOptionsOfPlaced(p).map(im=>({name:im.name,src:im.src})), x: p.x, size: p.size, flip: p.flip, expr: p.exprIdx,
       images: imagesOfPlaced(p).map(im => ({ name: im.name, src: im.src })),
     })),
     script: mapRoute(state.script),
@@ -6393,6 +6423,9 @@ async function init() {
     if (f) handleXlsxUpload(f, mode);
   });
   $('xlsxTemplateBtn').addEventListener('click', downloadXlsxTemplate);
+  $('multiScriptApply').addEventListener('click',applyMultilingualScript);
+  $('multiXlsxTemplate').addEventListener('click',downloadMultilingualXlsxTemplate);
+  $('multiSourceLang').value=LANG;
   $('exprImgUpload').addEventListener('change', e => { if (e.target.files.length) handleExprImages(e.target.files); e.target.value = ''; });
   $('evImgUpload').addEventListener('change', e => {
     const f = e.target.files && e.target.files[0]; e.target.value = '';
@@ -6630,6 +6663,53 @@ function resolveParsedLines(parsed) {
   return { lines, newChars, skipped };
 }
 
+/* 다국어 완성 번역문을 언어 구역별로 나누고 같은 순서의 대사에 배분 */
+function multilingualHeaderLang(label){
+  const s=String(label||'').toLowerCase().replace(/[\s()（）·_\-]/g,'');
+  if(/한국어|한글|korean/.test(s))return 'ko';if(/日本語|일본어|japanese/.test(label))return 'ja';if(/繁體|번체|台灣|台湾|traditional/.test(label))return 'tw';if(/简体|간체|中国|중국|simplified/.test(label))return 'cn';if(/english|영어/.test(s))return 'en';return null;
+}
+function splitMultilingualScript(raw,sourceLang){
+  const sections={};let current=sourceLang;sections[current]=[];
+  String(raw||'').replace(/\r/g,'').split('\n').forEach(line=>{
+    const m=line.match(/^\s*(?:\*\*)?\[([^\]]+)\](?:\*\*)?\s*$/),lang=m&&multilingualHeaderLang(m[1]);
+    if(lang){current=lang;if(!sections[current])sections[current]=[];return;}
+    if(/^\s*(?:---+|===+)\s*$/.test(line))return;sections[current].push(line);
+  });
+  const out={};Object.entries(sections).forEach(([lang,lines])=>{const text=lines.join('\n').trim();if(text)out[lang]=text;});return out;
+}
+function parsedContentEntries(text){return parseScriptText(text).filter(x=>x.type!=='section');}
+function translatedEntryText(entry){if(!entry)return '';if(entry.type==='choice')return (entry.options||[]).join(' | ');return String(entry.text||'');}
+function applyMultilingualScript(){
+  const raw=$('multiScriptInput').value,sourceLang=$('multiSourceLang').value||LANG,sections=splitMultilingualScript(raw,sourceLang),langs=Object.keys(sections),report=$('multiScriptReport');
+  if(langs.length<2||!sections[sourceLang]){alert(t('multi_script_need_two'));return;}
+  const sourceParsed=parseScriptText(sections[sourceLang]),sourceEntries=sourceParsed.filter(x=>x.type!=='section'),targets={};
+  for(const lang of langs){if(lang===sourceLang)continue;const entries=parsedContentEntries(sections[lang]);if(entries.length!==sourceEntries.length){alert(tf('multi_script_mismatch_f',translationLangLabel(lang),sourceEntries.length,entries.length));return;}targets[lang]=entries;}
+  if($('multiScriptMode').value==='replace'){state.script=[];state.routes={r1:[],r2:[],r3:[]};resetBranchPlayback();state.idx=-1;hideDialog();}
+  const resolved=resolveParsedLines(sourceParsed);if(resolved.lines.length!==sourceEntries.length){alert(tf('multi_script_mismatch_f',t('translate_source'),sourceEntries.length,resolved.lines.length));return;}
+  resolved.lines.forEach(({route,line},i)=>{
+    line.sourceLang=sourceLang;
+    if(line.type==='choice'){
+      line.optionsI18n=(line.options||[]).map(v=>({[sourceLang]:v}));
+      Object.entries(targets).forEach(([lang,entries])=>{const tr=entries[i],opts=tr&&tr.type==='choice'?(tr.options||[]):translatedEntryText(tr).split('|').map(x=>x.trim());while(line.optionsI18n.length<line.options.length)line.optionsI18n.push({});line.options.forEach((v,k)=>{line.optionsI18n[k][lang]=opts[k]||'';});});
+    }else{
+      line.texts={[sourceLang]:line.text};Object.entries(targets).forEach(([lang,entries])=>{line.texts[lang]=translatedEntryText(entries[i]);const p=placedById(line.cid),tr=entries[i];if(p&&(p.customName||!p.charKey)&&tr&&tr.rawName){const nm=tr.rawName.replace(PAREN_ANY_G,'').trim();if(nm&&nm!=='나레이션'){p.names=cleanI18nMap(p.names);p.names[lang]=nm;}}});
+      const p=placedById(line.cid),src=sourceEntries[i];if(p&&(p.customName||!p.charKey)&&src&&src.rawName){p.names=cleanI18nMap(p.names);p.names[sourceLang]=src.rawName.replace(PAREN_ANY_G,'').trim();}
+    }
+    (route==='main'?state.script:state.routes[route]).push(line);
+  });
+  state.translation={sourceLang,completed:langs.filter(x=>CONTENT_LANGS.includes(x)),glossaryVersion:GLOSSARY_VERSION,updatedAt:Date.now()};
+  renderCharLib();renderPlacedList();renderSpeakerOptions();renderScriptList();updateStage();saveState();applyLang();
+  report.innerHTML=`<b>${tf('multi_script_done_f',sourceEntries.length,langs.length)}</b>${resolved.newChars.length?`<br>${esc(resolved.newChars.join(', '))}`:''}`;report.classList.remove('hidden');toast(tf('multi_script_done_f',sourceEntries.length,langs.length));
+}
+function downloadMultilingualXlsxTemplate(){
+  if(typeof XLSX==='undefined'){alert(t('save_module_error'));return;}
+  const wb=XLSX.utils.book_new(),head=['place','character','face','source_lang','script_ko','script_tw','script_cn','script_ja','script_en','effect','etc.'];
+  const ws=XLSX.utils.aoa_to_sheet([head,['교실','나레이션','','ko','한국어 원문','繁體中文翻譯','简体中文翻译','日本語訳','English translation','','']]);
+  ws['!cols']=[{wch:18},{wch:18},{wch:14},{wch:12},{wch:42},{wch:42},{wch:42},{wch:42},{wch:42},{wch:24},{wch:16}];XLSX.utils.book_append_sheet(wb,ws,'multilingual_script');
+  const chars=[['id','한국어','繁體中文','简体中文','日本語','English'],...Object.entries(CHARACTER_CATALOG).map(([id,n])=>[id,n.ko,n.tw,n.cn,n.ja,n.en])];const cs=XLSX.utils.aoa_to_sheet(chars);cs['!cols']=[{wch:20},{wch:22},{wch:22},{wch:22},{wch:24},{wch:28}];XLSX.utils.book_append_sheet(wb,cs,'character_names');
+  const out=XLSX.write(wb,{bookType:'xlsx',type:'array'}),a=document.createElement('a');a.href=URL.createObjectURL(new Blob([out],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}));a.download='활협전_다국어_대사_입력_양식.xlsx';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+
 function applyBulkText(text, mode) {
   const parsed = parseScriptText(text);
   if (!parsed.length) { toast('인식된 대사가 없습니다. 형식을 확인하세요.'); return; }
@@ -6674,5 +6754,5 @@ async function handleScriptFile(file) {
 document.addEventListener('DOMContentLoaded', init);
 
 </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a31684b33c56723a',t:'MTc4Nzc4NTkxNQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
