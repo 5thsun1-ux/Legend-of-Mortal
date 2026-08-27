@@ -786,8 +786,7 @@ header{position:relative}
           <button class="langBtn" data-lang="en">English</button>
         </div>
         <img id="openLogo" alt="">
-        <div id="openLogoMark" class="hidden"><b></b><span></span></div>   <!-- 무에셋판 텍스트 문장 (내용은 JS가 채움) -->
-        <div id="openFan" data-i18n="open_fan">활협전 2차 창작</div>
+        <div id="openLogoMark" class="hidden"><b></b></div>   <!-- 무에셋판 텍스트 로고 -->
         <div id="openApp" data-i18n="app_title">활협전 대화 시현기</div>
         <input id="openTitle" type="text" maxlength="48" data-i18n-ph="open_title_ph" placeholder="제목을 입력하세요" autocomplete="off">
         <button id="openStart" data-i18n="open_start">시작하기</button>
@@ -962,6 +961,7 @@ header{position:relative}
         <button id="nextBtn" data-i18n="next">다음 ▶</button>
         <button id="exportPlayerBtn" data-i18n="export">시현 파일 저장 (HTML)</button>
         <button id="exportImagesBtn" data-i18n="export_images">대사 그림 저장 (JPG ZIP)</button>
+        <label class="evLabel"><span data-i18n="dialogue_scenes_per_image">한 장당 장면 수</span><input type="number" id="dialogueScenesPerImage" class="mediaPxInput" min="1" max="20" step="1" value="1"></label>
         <button id="exportVideoBtn" data-i18n="export_video">영상 저장 (고화질 WebM)</button>
         <button id="exportVideoCompactBtn" data-i18n="export_video_compact">영상 저장 (5MB 이하 WebM)</button>
         <button id="exportRecallImageBtn" data-i18n="export_recall">회상 대사 저장 (JPG)</button>
@@ -1056,11 +1056,11 @@ ko: {
   load_sample: '예시 대사 불러오기', clear_all: '전체 삭제', json_save: 'JSON 저장', json_load: 'JSON 불러오기',
   rt_label: '루트', add_choice: '⑂ 선택지 추가',
   p5t: '⑦ 재생',
-  ending_panel_title: '⑤ 엔딩', ending_panel_note: '— 사진·영상 저장의 마지막 장면', open_show: '오프닝 보기', ending_show: '엔딩 보기', ending_title_label: '엔딩 제목', ending_text_label: '엔딩 나레이션', ending_art_add: '엔딩 삽화 추가', ending_art_clear: '삽화 삭제', ending_hint: '왼쪽 책 표지에 삽화를 넣고 오른쪽 종이에 제목과 나레이션을 표시합니다. 내용이나 삽화를 입력한 경우에만 사진·영상 저장의 마지막 장면에 들어갑니다.', ending_title_ph: '엔딩 제목', ending_text_ph: '엔딩에 표시할 나레이션', ending_default_title: '끝', play_start: '▶ 처음부터', prev: '◀ 이전', next: '다음 ▶', export: '시현 파일 저장 (HTML)', export_images: '대사 그림 저장 (JPG ZIP)', export_video: '영상 저장 (고화질 WebM)', export_video_compact: '영상 저장 (5MB 이하 WebM)', export_recall: '회상 대사 저장 (JPG)', recall_page_height: '회상 한 장 높이',
-  p5hint: '화면 클릭 또는 Space/Enter로 진행합니다. 사진·영상 저장에는 큰 작품 제목의 오프닝과 책 형식 엔딩이 자동 포함됩니다. 「5MB 이하 WebM」은 같은 연출을 유지하면서 영상 길이에 맞춰 해상도와 비트율을 자동 조절합니다. 회상 대사 저장 옆 숫자는 한 장의 최대 높이(px)입니다.',
+  ending_panel_title: '⑤ 엔딩', ending_panel_note: '— 사진·영상 저장의 마지막 장면', open_show: '오프닝 보기', ending_show: '엔딩 보기', ending_title_label: '엔딩 제목', ending_text_label: '엔딩 나레이션', ending_art_add: '엔딩 삽화 추가', ending_art_clear: '삽화 삭제', ending_hint: '왼쪽 책 표지에 삽화를 넣고 오른쪽 종이에 제목과 나레이션을 표시합니다. 내용이나 삽화를 입력한 경우에만 사진·영상 저장의 마지막 장면에 들어갑니다.', ending_title_ph: '엔딩 제목', ending_text_ph: '엔딩에 표시할 나레이션', ending_default_title: '끝', play_start: '▶ 처음부터', prev: '◀ 이전', next: '다음 ▶', export: '시현 파일 저장 (HTML)', export_images: '대사 그림 저장 (JPG ZIP)', export_video: '영상 저장 (고화질 WebM)', export_video_compact: '영상 저장 (5MB 이하 WebM)', export_recall: '회상 대사 저장 (JPG)', dialogue_scenes_per_image: '한 장당 장면 수', recall_page_height: '회상 한 장 높이',
+  p5hint: '화면 클릭 또는 Space/Enter로 진행합니다. 사진·영상 저장에는 큰 작품 제목의 오프닝과 책 형식 엔딩이 자동 포함됩니다. 「5MB 이하 WebM」은 같은 연출을 유지하면서 영상 길이에 맞춰 해상도와 비트율을 자동 조절합니다. 대사 그림의 한 장당 장면 수를 1~20으로 지정하면 장면을 위에서 아래로 이어 붙입니다. 회상 대사 저장 옆 숫자는 한 장의 최대 높이(px)입니다.',
   save_base: '활협전_시현', file_dialogue_images: '대사_그림', file_video: '영상', file_video_compact: '5MB_영상', file_recall: '회상_대사',
   progress_jpg_f: 'JPG 저장 중 {0} / {1}', progress_zip: 'ZIP 묶는 중…', progress_zip_f: 'ZIP 묶는 중 {0}%', progress_video_f: '영상 만드는 중 {0} / {1}', progress_recall_f: '회상 대사 저장 중 {0} / {1}',
-  saved_images_f: '오프닝·엔딩을 포함한 고화질 장면 {0}장을 저장했습니다.', saved_video: '시현 영상을 저장했습니다.', saved_video_compact: '5MB 제한용 저용량 영상을 저장했습니다.', saved_recall_f: '회상 대사를 {0}장으로 저장했습니다.', save_no_lines: '저장할 대사가 없습니다.', save_image_error: '그림 저장 중 오류가 발생했습니다. 다시 시도하세요.', save_video_error: '영상 저장 중 오류가 발생했습니다. 최신 Chrome 또는 Edge에서 다시 시도하세요.', save_recall_error: '회상 대사 저장 중 오류가 발생했습니다.', save_module_error: '저장 모듈을 불러오지 못했습니다.', video_unsupported: '이 브라우저는 직접 영상 저장을 지원하지 않습니다.',
+  saved_images_f: '오프닝·엔딩을 포함한 고화질 장면 {0}장을 저장했습니다.', saved_images_grouped_f: '장면 {0}개를 긴 그림 {1}장으로 저장했습니다.', saved_video: '시현 영상을 저장했습니다.', saved_video_compact: '5MB 제한용 저용량 영상을 저장했습니다.', saved_recall_f: '회상 대사를 {0}장으로 저장했습니다.', save_no_lines: '저장할 대사가 없습니다.', save_image_error: '그림 저장 중 오류가 발생했습니다. 다시 시도하세요.', save_video_error: '영상 저장 중 오류가 발생했습니다. 최신 Chrome 또는 Edge에서 다시 시도하세요.', save_recall_error: '회상 대사 저장 중 오류가 발생했습니다.', save_module_error: '저장 모듈을 불러오지 못했습니다.', video_unsupported: '이 브라우저는 직접 영상 저장을 지원하지 않습니다.',
   bgm_label: '배경음', bgm_add: '음악 파일 추가', bgm_stop: '■ 정지', bgm_vol: '음량', bgm_expand: '나머지 곡 보기 ▼', bgm_collapse: '음악 목록 접기 ▲',
   bgm_hint: '● 선택곡은 기본 배경음이며, 각 대사의 배경음 선택에서 다른 기본곡으로 바꿀 수 있습니다. 곡명을 눌러 선택하고 ▶로 미리들을 수 있습니다.',
   bgm_cue_morning: '베토벤 교향곡 6번 「전원」', bgm_cue_speed: '베토벤 교향곡 7번', bgm_cue_surprise: '하이든 교향곡 94번 「놀람」', bgm_cue_fear: '베토벤 교향곡 5번 「운명」',
@@ -1151,11 +1151,11 @@ ja: {
   load_sample: '例文セリフを読み込む', clear_all: 'すべて削除', json_save: 'JSON保存', json_load: 'JSON読込',
   rt_label: 'ルート', add_choice: '⑂ 選択肢を追加',
   p5t: '⑦ 再生',
-  ending_panel_title: '⑤ エンディング', ending_panel_note: '— 画像・動画保存の最終場面', open_show: 'オープニングを見る', ending_show: 'エンディングを見る', ending_title_label: 'エンディング題名', ending_text_label: 'エンディング語り', ending_art_add: 'エンディング挿絵追加', ending_art_clear: '挿絵削除', ending_hint: '左の本の表紙に挿絵、右の紙に題名と語りを表示し、内容または挿絵がある場合だけ画像・動画保存の最後に追加します。', ending_title_ph: 'エンディング題名', ending_text_ph: 'エンディングに表示する語り', ending_default_title: '終', play_start: '▶ 最初から', prev: '◀ 前へ', next: '次へ ▶', export: 'デモファイル保存 (HTML)', export_images: 'セリフ画像保存 (JPG ZIP)', export_video: '動画保存 (高画質WebM)', export_video_compact: '動画保存 (5MB以下WebM)', export_recall: '回想セリフ保存 (JPG)', recall_page_height: '回想1枚の高さ',
-  p5hint: '画面クリックまたはSpace/Enterで進みます。画像・動画保存には大きな作品名のオープニングと本形式のエンディングが自動で入ります。「5MB以下WebM」は同じ演出を保ち、長さに応じて解像度とビットレートを自動調整します。回想の横の数値は1枚の最大高さ(px)です。',
+  ending_panel_title: '⑤ エンディング', ending_panel_note: '— 画像・動画保存の最終場面', open_show: 'オープニングを見る', ending_show: 'エンディングを見る', ending_title_label: 'エンディング題名', ending_text_label: 'エンディング語り', ending_art_add: 'エンディング挿絵追加', ending_art_clear: '挿絵削除', ending_hint: '左の本の表紙に挿絵、右の紙に題名と語りを表示し、内容または挿絵がある場合だけ画像・動画保存の最後に追加します。', ending_title_ph: 'エンディング題名', ending_text_ph: 'エンディングに表示する語り', ending_default_title: '終', play_start: '▶ 最初から', prev: '◀ 前へ', next: '次へ ▶', export: 'デモファイル保存 (HTML)', export_images: 'セリフ画像保存 (JPG ZIP)', export_video: '動画保存 (高画質WebM)', export_video_compact: '動画保存 (5MB以下WebM)', export_recall: '回想セリフ保存 (JPG)', dialogue_scenes_per_image: '1枚あたりの場面数', recall_page_height: '回想1枚の高さ',
+  p5hint: '画面クリックまたはSpace/Enterで進みます。画像・動画保存には大きな作品名のオープニングと本形式のエンディングが自動で入ります。「5MB以下WebM」は同じ演出を保ち、長さに応じて解像度とビットレートを自動調整します。セリフ画像の1枚あたりの場面数を1～20にすると、場面を上から下へ連結します。回想の横の数値は1枚の最大高さ(px)です。',
   save_base: '活俠伝_デモ', file_dialogue_images: 'セリフ画像', file_video: '動画', file_video_compact: '5MB動画', file_recall: '回想セリフ',
   progress_jpg_f: 'JPG保存中 {0} / {1}', progress_zip: 'ZIP作成中…', progress_zip_f: 'ZIP作成中 {0}%', progress_video_f: '動画作成中 {0} / {1}', progress_recall_f: '回想セリフ保存中 {0} / {1}',
-  saved_images_f: 'オープニング・エンディングを含む高画質場面を{0}枚保存しました。', saved_video: 'デモ動画を保存しました。', saved_video_compact: '5MB制限向けの軽量動画を保存しました。', saved_recall_f: '回想セリフを{0}枚で保存しました。', save_no_lines: '保存するセリフがありません。', save_image_error: '画像保存中にエラーが発生しました。', save_video_error: '動画保存中にエラーが発生しました。最新のChromeまたはEdgeで再試行してください。', save_recall_error: '回想セリフ保存中にエラーが発生しました。', save_module_error: '保存モジュールを読み込めませんでした。', video_unsupported: 'このブラウザは動画の直接保存に対応していません。',
+  saved_images_f: 'オープニング・エンディングを含む高画質場面を{0}枚保存しました。', saved_images_grouped_f: '{0}場面を縦長画像{1}枚で保存しました。', saved_video: 'デモ動画を保存しました。', saved_video_compact: '5MB制限向けの軽量動画を保存しました。', saved_recall_f: '回想セリフを{0}枚で保存しました。', save_no_lines: '保存するセリフがありません。', save_image_error: '画像保存中にエラーが発生しました。', save_video_error: '動画保存中にエラーが発生しました。最新のChromeまたはEdgeで再試行してください。', save_recall_error: '回想セリフ保存中にエラーが発生しました。', save_module_error: '保存モジュールを読み込めませんでした。', video_unsupported: 'このブラウザは動画の直接保存に対応していません。',
   bgm_label: '背景音', bgm_add: '音楽ファイルを追加', bgm_stop: '■ 停止', bgm_vol: '音量', bgm_expand: '残りの曲を見る ▼', bgm_collapse: '曲一覧を閉じる ▲',
   bgm_hint: '●の曲は初期BGMです。各セリフのBGM選択から別の内蔵曲へ変更できます。曲名で選択、▶で試聴できます。',
   bgm_cue_morning: 'ベートーヴェン交響曲第6番「田園」', bgm_cue_speed: 'ベートーヴェン交響曲第7番', bgm_cue_surprise: 'ハイドン交響曲第94番「驚愕」', bgm_cue_fear: 'ベートーヴェン交響曲第5番「運命」',
@@ -1246,11 +1246,11 @@ tw: {
   load_sample: '載入範例台詞', clear_all: '全部刪除', json_save: 'JSON 儲存', json_load: 'JSON 讀取',
   rt_label: '路線', add_choice: '⑂ 新增選項',
   p5t: '⑦ 播放',
-  ending_panel_title: '⑤ 結局', ending_panel_note: '— 圖片與影片儲存的最後一幕', open_show: '觀看開場', ending_show: '觀看結局', ending_title_label: '結局標題', ending_text_label: '結局旁白', ending_art_add: '新增結局插畫', ending_art_clear: '刪除插畫', ending_hint: '左側書封顯示插畫，右側紙張顯示標題與旁白，有內容或插畫時才加入圖片與影片的最後一幕。', ending_title_ph: '結局標題', ending_text_ph: '結局畫面的旁白', ending_default_title: '終', play_start: '▶ 從頭開始', prev: '◀ 上一句', next: '下一句 ▶', export: '儲存展示檔案 (HTML)', export_images: '儲存台詞圖片 (JPG ZIP)', export_video: '儲存影片 (高畫質WebM)', export_video_compact: '儲存影片 (5MB以下WebM)', export_recall: '儲存回想台詞 (JPG)', recall_page_height: '每張回想高度',
-  p5hint: '點擊畫面或按空白鍵/Enter前進。圖片與影片儲存會自動加入大字作品名開場和書卷式結局。「5MB以下WebM」保留相同演出，並依影片長度自動調整解析度與位元率。回想旁的數值是每張最大高度(px)。',
+  ending_panel_title: '⑤ 結局', ending_panel_note: '— 圖片與影片儲存的最後一幕', open_show: '觀看開場', ending_show: '觀看結局', ending_title_label: '結局標題', ending_text_label: '結局旁白', ending_art_add: '新增結局插畫', ending_art_clear: '刪除插畫', ending_hint: '左側書封顯示插畫，右側紙張顯示標題與旁白，有內容或插畫時才加入圖片與影片的最後一幕。', ending_title_ph: '結局標題', ending_text_ph: '結局畫面的旁白', ending_default_title: '終', play_start: '▶ 從頭開始', prev: '◀ 上一句', next: '下一句 ▶', export: '儲存展示檔案 (HTML)', export_images: '儲存台詞圖片 (JPG ZIP)', export_video: '儲存影片 (高畫質WebM)', export_video_compact: '儲存影片 (5MB以下WebM)', export_recall: '儲存回想台詞 (JPG)', dialogue_scenes_per_image: '每張場景數', recall_page_height: '每張回想高度',
+  p5hint: '點擊畫面或按空白鍵/Enter前進。圖片與影片儲存會自動加入大字作品名開場和書卷式結局。「5MB以下WebM」保留相同演出，並依影片長度自動調整解析度與位元率。將每張台詞圖片的場景數設為1～20，可由上而下拼接場景。回想旁的數值是每張最大高度(px)。',
   save_base: '活俠傳_展示', file_dialogue_images: '台詞圖片', file_video: '影片', file_video_compact: '5MB影片', file_recall: '回想台詞',
   progress_jpg_f: '正在儲存 JPG {0} / {1}', progress_zip: '正在建立 ZIP…', progress_zip_f: '正在建立 ZIP {0}%', progress_video_f: '正在製作影片 {0} / {1}', progress_recall_f: '正在儲存回想台詞 {0} / {1}',
-  saved_images_f: '已儲存{0}張包含開場與結局的高畫質場景。', saved_video: '已儲存展示影片。', saved_video_compact: '已儲存適用5MB限制的低容量影片。', saved_recall_f: '已將回想台詞儲存為{0}張。', save_no_lines: '沒有可儲存的台詞。', save_image_error: '儲存圖片時發生錯誤。', save_video_error: '儲存影片時發生錯誤，請使用最新版 Chrome 或 Edge。', save_recall_error: '儲存回想台詞時發生錯誤。', save_module_error: '無法載入儲存模組。', video_unsupported: '此瀏覽器不支援直接儲存影片。',
+  saved_images_f: '已儲存{0}張包含開場與結局的高畫質場景。', saved_images_grouped_f: '已將{0}個場景儲存為{1}張長圖。', saved_video: '已儲存展示影片。', saved_video_compact: '已儲存適用5MB限制的低容量影片。', saved_recall_f: '已將回想台詞儲存為{0}張。', save_no_lines: '沒有可儲存的台詞。', save_image_error: '儲存圖片時發生錯誤。', save_video_error: '儲存影片時發生錯誤，請使用最新版 Chrome 或 Edge。', save_recall_error: '儲存回想台詞時發生錯誤。', save_module_error: '無法載入儲存模組。', video_unsupported: '此瀏覽器不支援直接儲存影片。',
   bgm_label: '背景音', bgm_add: '新增音樂檔', bgm_stop: '■ 停止', bgm_vol: '音量', bgm_expand: '顯示其餘樂曲 ▼', bgm_collapse: '收合音樂清單 ▲',
   bgm_hint: '● 選取的樂曲是初始背景音樂，也可在每句台詞的背景音樂選單切換其他內建曲。點曲名選取、▶ 試聽。',
   bgm_cue_morning: '貝多芬第六交響曲《田園》', bgm_cue_speed: '貝多芬第七交響曲', bgm_cue_surprise: '海頓第94號交響曲《驚愕》', bgm_cue_fear: '貝多芬第五交響曲《命運》',
@@ -1341,11 +1341,11 @@ cn: {
   load_sample: '载入范例台词', clear_all: '全部删除', json_save: 'JSON 保存', json_load: 'JSON 读取',
   rt_label: '路线', add_choice: '⑂ 新增选项',
   p5t: '⑦ 播放',
-  ending_panel_title: '⑤ 结局', ending_panel_note: '— 图片与视频保存的最后一幕', open_show: '观看开场', ending_show: '观看结局', ending_title_label: '结局标题', ending_text_label: '结局旁白', ending_art_add: '添加结局插画', ending_art_clear: '删除插画', ending_hint: '左侧书封显示插画，右侧纸张显示标题与旁白，有内容或插画时才加入图片与视频的最后一幕。', ending_title_ph: '结局标题', ending_text_ph: '结局画面的旁白', ending_default_title: '终', play_start: '▶ 从头开始', prev: '◀ 上一句', next: '下一句 ▶', export: '保存展示文件 (HTML)', export_images: '保存台词图片 (JPG ZIP)', export_video: '保存视频 (高画质WebM)', export_video_compact: '保存视频 (5MB以下WebM)', export_recall: '保存回想台词 (JPG)', recall_page_height: '每张回想高度',
-  p5hint: '点击画面或按空格/Enter前进。图片与视频保存会自动加入大字作品名开场和书卷式结局。“5MB以下WebM”保留相同演出，并按视频长度自动调整分辨率与比特率。回想旁的数值是每张最大高度(px)。',
+  ending_panel_title: '⑤ 结局', ending_panel_note: '— 图片与视频保存的最后一幕', open_show: '观看开场', ending_show: '观看结局', ending_title_label: '结局标题', ending_text_label: '结局旁白', ending_art_add: '添加结局插画', ending_art_clear: '删除插画', ending_hint: '左侧书封显示插画，右侧纸张显示标题与旁白，有内容或插画时才加入图片与视频的最后一幕。', ending_title_ph: '结局标题', ending_text_ph: '结局画面的旁白', ending_default_title: '终', play_start: '▶ 从头开始', prev: '◀ 上一句', next: '下一句 ▶', export: '保存展示文件 (HTML)', export_images: '保存台词图片 (JPG ZIP)', export_video: '保存视频 (高画质WebM)', export_video_compact: '保存视频 (5MB以下WebM)', export_recall: '保存回想台词 (JPG)', dialogue_scenes_per_image: '每张场景数', recall_page_height: '每张回想高度',
+  p5hint: '点击画面或按空格/Enter前进。图片与视频保存会自动加入大字作品名开场和书卷式结局。“5MB以下WebM”保留相同演出，并按视频长度自动调整分辨率与比特率。将每张台词图片的场景数设为1～20，可从上到下拼接场景。回想旁的数值是每张最大高度(px)。',
   save_base: '活侠传_展示', file_dialogue_images: '台词图片', file_video: '视频', file_video_compact: '5MB视频', file_recall: '回想台词',
   progress_jpg_f: '正在保存 JPG {0} / {1}', progress_zip: '正在创建 ZIP…', progress_zip_f: '正在创建 ZIP {0}%', progress_video_f: '正在制作视频 {0} / {1}', progress_recall_f: '正在保存回想台词 {0} / {1}',
-  saved_images_f: '已保存{0}张包含开场与结局的高画质场景。', saved_video: '已保存展示视频。', saved_video_compact: '已保存适用5MB限制的低容量视频。', saved_recall_f: '已将回想台词保存为{0}张。', save_no_lines: '没有可保存的台词。', save_image_error: '保存图片时发生错误。', save_video_error: '保存视频时发生错误，请使用最新版 Chrome 或 Edge。', save_recall_error: '保存回想台词时发生错误。', save_module_error: '无法加载保存模块。', video_unsupported: '此浏览器不支持直接保存视频。',
+  saved_images_f: '已保存{0}张包含开场与结局的高画质场景。', saved_images_grouped_f: '已将{0}个场景保存为{1}张长图。', saved_video: '已保存展示视频。', saved_video_compact: '已保存适用5MB限制的低容量视频。', saved_recall_f: '已将回想台词保存为{0}张。', save_no_lines: '没有可保存的台词。', save_image_error: '保存图片时发生错误。', save_video_error: '保存视频时发生错误，请使用最新版 Chrome 或 Edge。', save_recall_error: '保存回想台词时发生错误。', save_module_error: '无法加载保存模块。', video_unsupported: '此浏览器不支持直接保存视频。',
   bgm_label: '背景音', bgm_add: '添加音乐文件', bgm_stop: '■ 停止', bgm_vol: '音量', bgm_expand: '显示其余乐曲 ▼', bgm_collapse: '收起音乐列表 ▲',
   bgm_hint: '● 选择的乐曲是初始背景音乐，也可在每句台词的背景音乐菜单切换其他内置曲。点曲名选择、▶ 试听。',
   bgm_cue_morning: '贝多芬第六交响曲《田园》', bgm_cue_speed: '贝多芬第七交响曲', bgm_cue_surprise: '海顿第94号交响曲《惊愕》', bgm_cue_fear: '贝多芬第五交响曲《命运》',
@@ -1436,11 +1436,11 @@ en: {
   load_sample: 'Load example script', clear_all: 'Delete all', json_save: 'Save JSON', json_load: 'Load JSON',
   rt_label: 'Route', add_choice: '⑂ Add choice',
   p5t: '⑦ Playback',
-  ending_panel_title: '⑤ Ending', ending_panel_note: '— Final scene for image and video exports', open_show: 'View opening', ending_show: 'View ending', ending_title_label: 'Ending title', ending_text_label: 'Ending narration', ending_art_add: 'Add ending illustration', ending_art_clear: 'Remove illustration', ending_hint: 'The illustration appears on the left book cover and the title and narration on the right paper. It is added to image and video exports only when a title, narration, or illustration has been entered.', ending_title_ph: 'Ending title', ending_text_ph: 'Narration shown on the ending screen', ending_default_title: 'The End', play_start: '▶ From start', prev: '◀ Prev', next: 'Next ▶', export: 'Export demo file (HTML)', export_images: 'Save dialogue images (JPG ZIP)', export_video: 'Save video (high-quality WebM)', export_video_compact: 'Save video (under 5MB WebM)', export_recall: 'Save recall dialogue (JPG)', recall_page_height: 'Recall page height',
-  p5hint: 'Click the screen or press Space/Enter to advance. Image and video exports automatically include a large-title opening and a book-style ending. The under-5MB WebM keeps the same effects and automatically adjusts resolution and bitrate for the duration. The number beside recall sets the maximum page height in pixels.',
+  ending_panel_title: '⑤ Ending', ending_panel_note: '— Final scene for image and video exports', open_show: 'View opening', ending_show: 'View ending', ending_title_label: 'Ending title', ending_text_label: 'Ending narration', ending_art_add: 'Add ending illustration', ending_art_clear: 'Remove illustration', ending_hint: 'The illustration appears on the left book cover and the title and narration on the right paper. It is added to image and video exports only when a title, narration, or illustration has been entered.', ending_title_ph: 'Ending title', ending_text_ph: 'Narration shown on the ending screen', ending_default_title: 'The End', play_start: '▶ From start', prev: '◀ Prev', next: 'Next ▶', export: 'Export demo file (HTML)', export_images: 'Save dialogue images (JPG ZIP)', export_video: 'Save video (high-quality WebM)', export_video_compact: 'Save video (under 5MB WebM)', export_recall: 'Save recall dialogue (JPG)', dialogue_scenes_per_image: 'Scenes per image', recall_page_height: 'Recall page height',
+  p5hint: 'Click the screen or press Space/Enter to advance. Image and video exports automatically include a large-title opening and a book-style ending. The under-5MB WebM keeps the same effects and automatically adjusts resolution and bitrate for the duration. Set scenes per image from 1 to 20 to join dialogue scenes vertically. The number beside recall sets the maximum page height in pixels.',
   save_base: 'Legend_of_Mortal_Demo', file_dialogue_images: 'dialogue_images', file_video: 'video', file_video_compact: 'under_5MB_video', file_recall: 'recall_dialogue',
   progress_jpg_f: 'Saving JPG {0} / {1}', progress_zip: 'Building ZIP…', progress_zip_f: 'Building ZIP {0}%', progress_video_f: 'Rendering video {0} / {1}', progress_recall_f: 'Saving recall dialogue {0} / {1}',
-  saved_images_f: 'Saved {0} high-quality scenes including the opening and ending.', saved_video: 'Saved the demo video.', saved_video_compact: 'Saved a compact video for the 5MB limit.', saved_recall_f: 'Saved recall dialogue in {0} image(s).', save_no_lines: 'There are no dialogue lines to save.', save_image_error: 'An error occurred while saving images.', save_video_error: 'An error occurred while saving video. Try the latest Chrome or Edge.', save_recall_error: 'An error occurred while saving recall dialogue.', save_module_error: 'Could not load the save module.', video_unsupported: 'This browser does not support direct video export.',
+  saved_images_f: 'Saved {0} high-quality scenes including the opening and ending.', saved_images_grouped_f: 'Saved {0} scenes in {1} tall image(s).', saved_video: 'Saved the demo video.', saved_video_compact: 'Saved a compact video for the 5MB limit.', saved_recall_f: 'Saved recall dialogue in {0} image(s).', save_no_lines: 'There are no dialogue lines to save.', save_image_error: 'An error occurred while saving images.', save_video_error: 'An error occurred while saving video. Try the latest Chrome or Edge.', save_recall_error: 'An error occurred while saving recall dialogue.', save_module_error: 'Could not load the save module.', video_unsupported: 'This browser does not support direct video export.',
   bgm_label: 'BGM', bgm_add: 'Add music files', bgm_stop: '■ Stop', bgm_vol: 'Volume', bgm_expand: 'Show remaining tracks ▼', bgm_collapse: 'Collapse track list ▲',
   bgm_hint: 'The ● track is the initial BGM. Each dialogue line can switch to another built-in track. Click a name to select it and ▶ to preview.',
   bgm_cue_morning: 'Beethoven Symphony No. 6 “Pastoral”', bgm_cue_speed: 'Beethoven Symphony No. 7', bgm_cue_surprise: 'Haydn Symphony No. 94 “Surprise”', bgm_cue_fear: 'Beethoven Symphony No. 5',
@@ -5635,9 +5635,9 @@ function buildPlayerHtml(dataObj) {
     '  <div id="playerLangRow">'+langButtons+'</div><img id="bgImg" alt=""><div id="charLayer"></div><div id="danceOverlay" class="hidden"><div id="danceLight"></div><div id="danceParticles"></div></div><div id="vignette"></div><div id="eventOverlay" class="hidden"><img id="eventFlatImage" alt=""></div><div id="itemOverlay" class="hidden"><img id="itemFlatImage" alt=""></div><div id="screenFx" class="hidden"></div>\n' +
     '  <div id="openOverlay"><img id="openBg" alt="">' +
     (ASSET_FREE   // 무에셋판 플레이어: 로고 이미지 대신 텍스트 문장(한자 표기 + 현지화 프로그램명)
-      ? '<div id="openLogoMark"><b>' + esc((I18N.tw && I18N.tw.app_title || '').split(' ')[0]) + '</b><span>' + esc(appTitle()) + '</span></div>'
+      ? '<div id="openLogoMark"><b>' + esc((I18N.tw && I18N.tw.app_title || '').split(' ')[0]) + '</b></div>'
       : '<img id="openLogo" alt="">') +
-    '<div id="openFan">' + t('open_fan') + '</div><div id="openTitle"></div><button id="openStart">' + t('open_start') + '</button><div id="openFoot">' + t('open_foot') + '</div></div>' +
+    '<div id="openTitle"></div><button id="openStart">' + t('open_start') + '</button><div id="openFoot">' + t('open_foot') + '</div></div>' +
     '  <div id="credit">활협전 대화 시현 · 팬메이드</div>\n' +
     '  <div id="dialogBox" class="hidden"><div id="speakerPanel"><div id="speakerBadge"></div><img id="speakerIcon" class="hidden" alt=""></div><div id="dialogText"></div><div id="nextHint">▼</div></div>\n' +
     '  <div id="stageBtns">\n' +
@@ -5711,6 +5711,7 @@ const MEDIA_EXPORT_QUALITY = {
 let imageExporting = false;   // 그림과 영상 저장 작업 공용 잠금
 const sleep = ms => new Promise(res => setTimeout(res, ms));
 function mediaQualityConfig() { return MEDIA_EXPORT_QUALITY.high; }
+function dialogueScenesPerImageValue(){const el=$('dialogueScenesPerImage');return Math.min(20,Math.max(1,Math.round(+(el&&el.value)||1)));}
 function estimatedLineMotionMs(frame){
   if(!frame||frame.kind||!frame.line)return 0;const l=frame.line,fx=l.fx||{};let ms=450;
   if(fx.screenShake)ms=Math.max(ms,520);if(fx.fade)ms=Math.max(ms,1150);if(fx.dance)ms=Math.max(ms,mediaFrameHold(frame));
@@ -5830,13 +5831,13 @@ function beginMediaExport(kind='image',cfg=mediaQualityConfig()) {
   stage.classList.toggle('stillCaptureMode',kind!=='video');
   stage.classList.toggle('videoCaptureMode',kind==='video');
   stage.style.pointerEvents='none';
-  $('exportImagesBtn').disabled=true;$('exportVideoBtn').disabled=true;$('exportVideoCompactBtn').disabled=true;$('exportRecallImageBtn').disabled=true;if($('recallPageHeight'))$('recallPageHeight').disabled=true;
+  $('exportImagesBtn').disabled=true;$('exportVideoBtn').disabled=true;$('exportVideoCompactBtn').disabled=true;$('exportRecallImageBtn').disabled=true;if($('recallPageHeight'))$('recallPageHeight').disabled=true;if($('dialogueScenesPerImage'))$('dialogueScenesPerImage').disabled=true;
   return saved;
 }
 function restoreAfterMediaExport(saved) {
   const stage=$('stage'),wrap=$('stageWrap');
   stage.classList.remove('captureMode','stillCaptureMode','videoCaptureMode','mediaOpeningCapture'); stage.style.cssText=saved.stageCss||'';wrap.style.cssText=saved.wrapCss||'';
-  $('exportImagesBtn').disabled=false;$('exportVideoBtn').disabled=false;$('exportVideoCompactBtn').disabled=false;$('exportRecallImageBtn').disabled=false;if($('recallPageHeight'))$('recallPageHeight').disabled=false;
+  $('exportImagesBtn').disabled=false;$('exportVideoBtn').disabled=false;$('exportVideoCompactBtn').disabled=false;$('exportRecallImageBtn').disabled=false;if($('recallPageHeight'))$('recallPageHeight').disabled=false;if($('dialogueScenesPerImage'))$('dialogueScenesPerImage').disabled=false;
   $('exportImagesBtn').textContent=t('export_images');$('exportVideoBtn').textContent=t('export_video');$('exportVideoCompactBtn').textContent=t('export_video_compact');$('exportRecallImageBtn').textContent=t('export_recall');
   state.idx=saved.idx; state.route=saved.route; state.rIdx=saved.rIdx; state.uiRoute=saved.uiRoute;
   state.choiceOpen=false; state.recallOpen=false; openingOpen=false;endingPreviewOpen=false;
@@ -5859,24 +5860,35 @@ async function exportDialogueImages() {
   if (!frames.length) { toast(t('save_no_lines')); return; }
   await ensureAllFlatAssets();
   imageExporting=true;
-  const btn=$('exportImagesBtn'), cfg=mediaQualityConfig(), saved=beginMediaExport('image'), zip=new JSZip();
+  const btn=$('exportImagesBtn'),cfg=mediaQualityConfig(),saved=beginMediaExport('image'),zip=new JSZip(),perPage=dialogueScenesPerImageValue(),sceneH=Math.round(cfg.imageWidth*9/16);
+  let outputPages=0;
   try {
-    for (let n=0;n<frames.length;n++) {
-      const f=frames[n], canvas=await renderExportFrame(f,cfg.imageWidth);
-      const blob=await canvasBlob(canvas,'image/jpeg',cfg.jpeg);
-      const seq=String(n+1).padStart(4,'0'), lineNo=String(f.lineNo).padStart(4,'0');
-      if(f.kind)zip.file(`${seq}_${f.kind}.jpg`,blob);
-      else{const speaker=safeFileName(nameOf(f.line.cid)||t('narr'))||'dialogue';zip.file(`${seq}_${f.routeTag}_${lineNo}_${speaker}.jpg`,blob);}
-      canvas.width=1; canvas.height=1;
-      btn.textContent=tf('progress_jpg_f',n+1,frames.length);
-      await sleep(0);
+    if(perPage===1){
+      for(let n=0;n<frames.length;n++){
+        const f=frames[n],canvas=await renderExportFrame(f,cfg.imageWidth),blob=await canvasBlob(canvas,'image/jpeg',cfg.jpeg);
+        const seq=String(n+1).padStart(4,'0'),lineNo=String(f.lineNo).padStart(4,'0');
+        if(f.kind)zip.file(`${seq}_${f.kind}.jpg`,blob);
+        else{const speaker=safeFileName(nameOf(f.line.cid)||t('narr'))||'dialogue';zip.file(`${seq}_${f.routeTag}_${lineNo}_${speaker}.jpg`,blob);}
+        canvas.width=1;canvas.height=1;outputPages++;btn.textContent=tf('progress_jpg_f',n+1,frames.length);await sleep(0);
+      }
+    }else{
+      for(let start=0;start<frames.length;start+=perPage){
+        const count=Math.min(perPage,frames.length-start),page=document.createElement('canvas');page.width=cfg.imageWidth;page.height=sceneH*count;
+        const ctx=page.getContext('2d',{alpha:false});ctx.fillStyle='#000';ctx.fillRect(0,0,page.width,page.height);
+        for(let k=0;k<count;k++){
+          const n=start+k,frameCanvas=await renderExportFrame(frames[n],cfg.imageWidth);ctx.drawImage(frameCanvas,0,k*sceneH,cfg.imageWidth,sceneH);frameCanvas.width=1;frameCanvas.height=1;
+          btn.textContent=tf('progress_jpg_f',n+1,frames.length);await sleep(0);
+        }
+        const blob=await canvasBlob(page,'image/jpeg',cfg.jpeg),pageNo=String(outputPages+1).padStart(4,'0'),from=String(start+1).padStart(4,'0'),to=String(start+count).padStart(4,'0');
+        zip.file(`${pageNo}_scenes_${from}-${to}.jpg`,blob);page.width=1;page.height=1;outputPages++;await sleep(0);
+      }
     }
     btn.textContent=t('progress_zip');
     const blob=await zip.generateAsync({type:'blob',compression:'STORE'},m=>{btn.textContent=tf('progress_zip_f',Math.round(m.percent));});
-    const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);
     a.download=(workTitle()?safeFileName(workTitle()):safeFileName(t('save_base')))+'_'+safeFileName(t('file_dialogue_images'))+'.zip';
-    a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),1000);
-    toast(tf('saved_images_f',frames.length));
+    a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+    toast(perPage===1?tf('saved_images_f',frames.length):tf('saved_images_grouped_f',frames.length,outputPages));
   } catch (e) {
     console.warn(e); alert(t('save_image_error'));
   } finally {
@@ -6377,6 +6389,7 @@ async function init() {
   renderScriptList(); updateStage(); updateProgress();
   renderBgmList(); $('bgmVol').value = Math.round(bgmVol * 100);
   try { const h=+localStorage.getItem('hwalSim_recallPageHeight'); if(h>=1200&&h<=30000)$('recallPageHeight').value=Math.round(h); } catch(e) {}
+  try { const n=+localStorage.getItem('hwalSim_dialogueScenesPerImage'); if(n>=1&&n<=20)$('dialogueScenesPerImage').value=Math.round(n); } catch(e) {}
   if (v1) saveState(); // 구버전 데이터를 IndexedDB로 이전
 
   $('stage').addEventListener('click', () => { if (!state.recallOpen && !modalCharId && !openingOpen && !endingPreviewOpen) next(); });
@@ -6491,6 +6504,7 @@ async function init() {
     const el=$('recallPageHeight'),v=Math.min(30000,Math.max(1200,Math.round(+el.value||12000)));el.value=v;
     try{localStorage.setItem('hwalSim_recallPageHeight',String(v));}catch(e){}
   });
+  $('dialogueScenesPerImage').addEventListener('change',()=>{const el=$('dialogueScenesPerImage'),v=dialogueScenesPerImageValue();el.value=v;try{localStorage.setItem('hwalSim_dialogueScenesPerImage',String(v));}catch(e){}});
 
   $('bgmUpload').addEventListener('change', e => { if (e.target.files.length) handleBgmUpload(e.target.files); e.target.value = ''; });
   $('bgmStopBtn').addEventListener('click', () => { stopBgm(); toast(t('tsBgmStopped')); });
@@ -6754,5 +6768,5 @@ async function handleScriptFile(file) {
 document.addEventListener('DOMContentLoaded', init);
 
 </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a31684b33c56723a',t:'MTc4Nzc4NTkxNQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a319a8fc4d78d1ea',t:'MTc4NzgxODg1OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
